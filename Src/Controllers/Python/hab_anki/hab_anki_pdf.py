@@ -11,43 +11,8 @@ from PIL import Image
 from io import BytesIO
 import datetime
 import string
-import seaborn as sns
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-import shutil
-
-urlItens = "https://cdn.enemaster.app.br/gerador/provasOrdernadasPorTri.csv"
-
-def generate_random_number():
-    # Obter o timestamp atual em segundos
-    timestamp = int(time.time())
-
-    # Definir o timestamp como semente para a função random
-    random.seed(timestamp)
-
-    # Gerar um número inteiro aleatório entre 0 e 100000
-    return random.randint(0, 100000)
-
-dItens = pd.read_csv(urlItens, encoding='utf-8', decimal=',')
-
-# Criar um modelo para os flashcards
-modelo = genanki.Model(
-    187333333,
-    'enemaster',
-    fields=[
-        {'name': 'MyMedia'},
-        {'name': 'Questão'},
-        {'name': 'Resposta'},
-        {'name': 'Image'}
-    ],
-    templates=[
-        {
-            'name': 'Cartão 1',
-            'qfmt': '<b>{{Questão}}</b><hr>{{MyMedia}}',
-            'afmt': '{{FrontSide}}<br><hr><b>{{Resposta}}<hr></b></b>{{Image}}',
-        },
-    ])
-
 
 #Definindo Classe do PDF de Saída
 class PDF(FPDF):
@@ -79,14 +44,34 @@ class PDF(FPDF):
         self.set_font('Arial', 'BI', 8)
         self.cell(0, 8, '     '+str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
-def toYoutube(textPrompt):
-    try:
-      search_query = "https://www.youtube.com/results?search_query=" + "+".join(textPrompt.split())
-    except:
-      search_query = 'N/A'
-    return(search_query)
+def questHab(dfResult_CN, flashname, flashstr):
+    dItens = pd.read_csv("https://cdn.enemaster.app.br/gerador/provasOrdernadasPorTri.csv", encoding='utf-8', decimal=',')
+    # Criar um modelo para os flashcards
+    modelo = genanki.Model(
+        187333333,
+        'enemaster',
+        fields=[
+            {'name': 'MyMedia'},
+            {'name': 'Questão'},
+            {'name': 'Resposta'},
+            {'name': 'Image'}
+        ],
+        templates=[
+            {
+                'name': 'Cartão 1',
+                'qfmt': '<b>{{Questão}}</b><hr>{{MyMedia}}',
+                'afmt': '{{FrontSide}}<br><hr><b>{{Resposta}}<hr></b></b>{{Image}}',
+            },
+        ])
 
-def remover_caracteres_invalidos(texto):
+    def toYoutube(textPrompt):
+        try:
+            search_query = "https://www.youtube.com/results?search_query=" + "+".join(textPrompt.split())
+        except:
+            search_query = 'N/A'
+        return(search_query)
+
+    def remover_caracteres_invalidos(texto):
         numAssc = 251
         try:
           caracteres_invalidos = [char for char in texto if ord(char) > numAssc]
@@ -96,43 +81,52 @@ def remover_caracteres_invalidos(texto):
           print(f'  PSEUDO/ERRO CARACTERE: IGNORADO EM: remover_caracteres_invalidos(texto)\n       {datetime.datetime.now()}')
           return(texto)
 
+    def Capa(dItens, pltName):
+        todos_itens = ' '.join(s for s in dItens['OCRSearch'].apply(str).values)
+        todos_itens = todos_itens.replace(';',  ' ').replace('/',  ' ')
 
-def Capa(dItens, pltName):
-  todos_itens = ' '.join(s for s in dItens['OCRSearch'].apply(str).values)
-  todos_itens = todos_itens.replace(';',  ' ').replace('/',  ' ')
+        all_letters = list(string.ascii_lowercase + string.ascii_uppercase)
 
-  all_letters = list(string.ascii_lowercase + string.ascii_uppercase)
+        stop_words = all_letters +  ['a', 'A', 'b', 'B', 'c', 'C', 'd','figura', 'D', 'e', 'E', 'v', 'err', 'nan','pela', 'ser', 'de', 'etc', '(s)', 'do', 'da', 'por', 'para', 'entre', 'se', 'um', 'até', 'ele', 'ela', 'qual', 'bem', 'só', 'mesmo', 'uma', 'um', 'mais', 'menos', 'outro', 'porque', 'por que', 'cada', 'muito', 'todo', 'foram', 'tem', 'meio', 'país', 'una', 'for',
+                    'uma', 'na', 'su', 'with', 'no','estes','mesma', 'lá', 'that', 'vo' 'pela', 'pelo', 'h', 'H', 'CH', 'ao', 'com', 'que', 'em', 'dos', 'das', 'eu', 'lo', 'the', 'me', 'y', 'la', 'en', 'en', 'to', 'quem', 'and', 'sem', 'on', 'at', 'essa', 'sem', 'uso', 'esse', 'las', 'suas', 'el', 'poi', 'pai', 'doi', 'in', 'pois', 'con', 'of',
+                    'ainda', 'não', 'o', 'a', 'os','mê','próximo', 'apresenta','quando', 'meu', 'acordo', 'grande', 'saída', 'dessa', 'as', 'deve', 'Além', 'cinco', 'nessa', 'conforme', 'contendo', 'interior', 'Disponível', 'disponível', 'ocorre', 'vezes', 'através', 'grupo', 'tipo', 'algumas', 'causa', 'considerando', 'essas', 'formação', 'so', 'SO', 'pessoa', 'utilizada', 'alguns', 'quais', 'fio', 'outras', 'só', 'exemplo', 'está', 'oo','isso', 'fonte', 'durante', 'onde', 'caso', 'será', 'pelos', 'Disponível', 'duas', 'dois', 'onde', 'podem', 'apresentam', 'alguma', 'outra', 'seja', 'menor', 'Após', 'Considere', 'partir' 'aq', 'etapa', 'três', 'vez', 'pelas', 'dia', 'nova', 'Acesso', 'veículo', 'seus', 'têm', 'quadro', 'parte', 'desses', 'alguma', 'alta', 'sendo', 'eles', 'outros', 'respectivamente', 'lhe', 'ficou','desse', 'pode', 'nas', 'nem', 'nos', 'nesse', 'apenas', 'n', 'esses', 'igual', 'estão', 'br', 'L', 'questão', 'e', 'texto', 'são', 'é', 'como', 'à', 'no', 'mai', 'seu', 'sua', 'mais', '.', 'ano', 'ma', 'ou', 'foi', 'sobre', 'às', 'aos', 'mas', 'há', 'seguinte', 'já', 'maior', 'era', 'desde', 'diferente', 'forma', 'também']
 
-  stop_words = all_letters +  ['a', 'A', 'b', 'B', 'c', 'C', 'd','figura', 'D', 'e', 'E', 'v', 'nan','pela', 'ser', 'de', 'etc', '(s)', 'do', 'da', 'por', 'para', 'entre', 'se', 'um', 'até', 'ele', 'ela', 'qual', 'bem', 'só', 'mesmo', 'uma', 'um', 'mais', 'menos', 'outro', 'porque', 'por que', 'cada', 'muito', 'todo', 'foram', 'tem', 'meio', 'país', 'una', 'for',
-                'uma', 'na', 'su', 'with', 'no','estes','mesma', 'lá', 'that', 'vo' 'pela', 'pelo', 'h', 'H', 'CH', 'ao', 'com', 'que', 'em', 'dos', 'das', 'eu', 'lo', 'the', 'me', 'y', 'la', 'en', 'en', 'to', 'quem', 'and', 'sem', 'on', 'at', 'essa', 'sem', 'uso', 'esse', 'las', 'suas', 'el', 'poi', 'pai', 'doi', 'in', 'pois', 'con', 'of',
-                'ainda', 'não', 'o', 'a', 'os','mê','próximo', 'apresenta','quando', 'meu', 'acordo', 'grande', 'saída', 'dessa', 'as', 'deve', 'Além', 'cinco', 'nessa', 'conforme', 'contendo', 'interior', 'Disponível', 'disponível', 'ocorre', 'vezes', 'através', 'grupo', 'tipo', 'algumas', 'causa', 'considerando', 'essas', 'formação', 'so', 'SO', 'pessoa', 'utilizada', 'alguns', 'quais', 'fio', 'outras', 'só', 'exemplo', 'está', 'oo','isso', 'fonte', 'durante', 'onde', 'caso', 'será', 'pelos', 'Disponível', 'duas', 'dois', 'onde', 'podem', 'apresentam', 'alguma', 'outra', 'seja', 'menor', 'Após', 'Considere', 'partir' 'aq', 'etapa', 'três', 'vez', 'pelas', 'dia', 'nova', 'Acesso', 'veículo', 'seus', 'têm', 'quadro', 'parte', 'desses', 'alguma', 'alta', 'sendo', 'eles', 'outros', 'respectivamente', 'lhe', 'ficou','desse', 'pode', 'nas', 'nem', 'nos', 'nesse', 'apenas', 'n', 'esses', 'igual', 'estão', 'br', 'L', 'questão', 'e', 'texto', 'são', 'é', 'como', 'à', 'no', 'mai', 'seu', 'sua', 'mais', '.', 'ano', 'ma', 'ou', 'foi', 'sobre', 'às', 'aos', 'mas', 'há', 'seguinte', 'já', 'maior', 'era', 'desde', 'diferente', 'forma', 'também']
+        wc = WordCloud(background_color='black',
+                    stopwords=stop_words,
+                    collocations=False,
+                    colormap = 'copper',
+                    width=2480, height=3508, contour_width=0)  # Defina a largura e altura desejadas
 
-  wc = WordCloud(background_color='black',
-                stopwords=stop_words,
-                collocations=False,
-                colormap = 'copper',
-                width=2480, height=3508, contour_width=0)  # Defina a largura e altura desejadas
+        wordcloud = wc.generate(todos_itens)
 
-  wordcloud = wc.generate(todos_itens)
+        # Plotar a nuvem de palavras
+        plt.figure(figsize=(10, 10))  # Ajuste o tamanho da figura conforme necessário
 
-  # Plotar a nuvem de palavras
-  plt.figure(figsize=(10, 10))  # Ajuste o tamanho da figura conforme necessário
+        a4_width_inches = 8.27
+        a4_height_inches = 11.69
+        dpi = 300  # Ajuste a resolução conforme necessário
 
-  a4_width_inches = 8.27
-  a4_height_inches = 11.69
-  dpi = 300  # Ajuste a resolução conforme necessário
+        # Criar a figura com o tamanho A4
+        fig, ax = plt.subplots(figsize=(a4_width_inches, a4_height_inches), dpi=dpi)
 
-  # Criar a figura com o tamanho A4
-  fig, ax = plt.subplots(figsize=(a4_width_inches, a4_height_inches), dpi=dpi)
+        # Plotar a nuvem de palavras
+        ax.imshow(wordcloud, interpolation='bilinear')
+        ax.axis("off")
 
-  # Plotar a nuvem de palavras
-  ax.imshow(wordcloud, interpolation='bilinear')
-  ax.axis("off")
+        # Salvar a figura em tamanho A4
+        plt.savefig(f"{pltName}.png", bbox_inches='tight', pad_inches=0)
 
-  # Salvar a figura em tamanho A4
-  plt.savefig(f"{pltName}.png", bbox_inches='tight', pad_inches=0)
+    def generate_random_number():
+        # Obter o timestamp atual em segundos
+        timestamp = int(time.time())
 
-def questHab(dfResult_CN, flashname, flashstr):
+        # Definir o timestamp como semente para a função random
+        random.seed(timestamp)
+
+        # Gerar um número inteiro aleatório entre 0 e 100000
+        return random.randint(0, 100000)
+    
+    
     leftRandon = generate_random_number()
     print(f'''
     ---------------------LOGS------------------------
@@ -199,7 +193,7 @@ def questHab(dfResult_CN, flashname, flashstr):
     pdf.add_page()
 
     pdf.set_font('Times', 'B', 12)
-    img_dir = f'/temp/{leftRandon}/images/'  # Diretório local para salvar as imagens
+    img_dir = f'images/'  # Diretório local para salvar as imagens
 
     # Criar diretório se não existir
     if not os.path.exists(img_dir):
@@ -293,7 +287,6 @@ def questHab(dfResult_CN, flashname, flashstr):
     pdf.set_font('Arial', 'BI', 8)
 
     os.remove(f"{leftRandon}.png")
-    shutil.rmtree(f'/temp/{leftRandon}')
 
     strOut = str(flashname)+ '.pdf'
 
