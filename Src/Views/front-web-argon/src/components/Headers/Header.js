@@ -4,7 +4,7 @@ import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 const Header = (props) => {
 
   const renderizarNotas = (props) => {
-    if(props.exibnote != false){
+    if(props.exibnote !== false){
       return(<> <>
         <Col lg="6" xl="3">
           <Card className="card-stats mb-4 mb-xl-0">
