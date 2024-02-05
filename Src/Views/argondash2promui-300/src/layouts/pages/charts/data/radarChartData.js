@@ -14,18 +14,17 @@ Coded by www.creative-tim.com
 */
 
 const radarChartData = {
-  labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
+  labels: ['Redação', 'Linguagens', 'Humanas', 'Natureza', 'Matemática'],
   datasets: [
     {
-      label: "Student A",
-      color: "dark",
-      data: [65, 75, 70, 80, 60, 80],
-      borderDash: [5, 5],
+      label: "Nota",
+      color: "primary",
+      data: [1000, 670.8, 686, 830, 930],
     },
     {
-      label: "Student B",
-      color: "info",
-      data: [54, 65, 60, 70, 70, 75],
+      label: "corte",
+      color: "dark",
+      data: [0,0,0,0,0],
     },
   ],
 };

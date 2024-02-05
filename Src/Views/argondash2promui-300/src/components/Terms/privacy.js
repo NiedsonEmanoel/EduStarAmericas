@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+
 export default function Privacy(props) {
     const { Name, Link, Title } = props;
     return (

@@ -1,123 +1,130 @@
-/* eslint-disable no-unused-vars */
-/**
-=========================================================
-* Argon Dashboard 2 PRO MUI - v3.0.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-mui
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // @mui material components
 import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
-
+import { NavLink } from "react-router-dom";
 // Argon Dashboard 2 PRO MUI components
 import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
+import ArgonButton from "components/ArgonButton";
+import { useState } from "react";
+import Streak from "components/StreakModule";
+import Card from "@mui/material/Card";
+import Table from "examples/Tables/Table";
+import projectsTableData from "layouts/dashboards/default/data/projectsTableData";
 
 // Argon Dashboard 2 PRO MUI example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DetailedStatisticsCard from "examples/Cards/StatisticsCards/DetailedStatisticsCard";
-import SalesTable from "examples/Tables/SalesTable";
-import Table from "examples/Tables/Table";
-import CategoriesList from "examples/Lists/CategoriesList";
+import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnutChart";
 import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
+import PolarChart from "examples/Charts/PolarChart";
 
 // Argon Dashboard 2 PRO MUI base styles
 import typography from "assets/theme/base/typography";
 
-// Dashboard layout components
-import Slider from "layouts/dashboards/default/components/Slider";
-import TeamMembers from "layouts/dashboards/default/components/TeamMembers";
-import TodoList from "layouts/dashboards/default/components/TodoList";
-import ProgressTrack from "layouts/dashboards/default/components/ProgressTrack";
-import BalanceCard from "layouts/dashboards/default/components/BalanceCard";
-import CryptoCard from "layouts/dashboards/default/components/CryptoCard";
-
-// Pages layout components
-import Post from "layouts/pages/profile/teams/components/Post";
-
-// Data
-import reportsBarChartData from "layouts/dashboards/default/data/reportsBarChartData";
-import gradientLineChartData from "layouts/dashboards/default/data/gradientLineChartData";
-import projectsTableData from "layouts/dashboards/default/data/projectsTableData";
-import salesTableData from "layouts/dashboards/default/data/salesTableData";
-import authorsTableData from "layouts/dashboards/default/data/authorsTableData";
-import categoriesListData from "layouts/dashboards/default/data/categoriesListData";
+import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
+import { Divider } from "@mui/material";
 
 function Default() {
+
   const { size } = typography;
+  const [nameMat, setnameMat] = useState('Linguagens')
+  const [colorGraph, setcolorGraph] = useState('info')
+  const [xGraph_DESEM, setXGraph_DESEM] = useState(["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
+
+  const toogleDesemLC = (name) => {
+    setnameMat('Linguagens')
+    setcolorGraph('info')
+  }
+
+  const toogleDesemCH = (name) => {
+    setnameMat('Humanas')
+    setcolorGraph('warning')
+  }
+
+  const toogleDesemCN = (name) => {
+    setnameMat('Natureza')
+    setcolorGraph('success')
+  }
+
+  const toogleDesemMT = (name) => {
+    setnameMat('Matemática')
+    setcolorGraph('error')
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
 
       <ArgonBox py={3}>
+
         <Grid container spacing={3} mb={3}>
 
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={4}>
             <DetailedStatisticsCard
-              title="Linguagens e Códigos"
+              title="Linguagens, Códigos e suas tecnologias"
               count="686.8"
               icon={{ color: "info", component: <i className="ni ni-ruler-pencil" /> }}
               percentage={{ color: "success", text: "Você acertou 35 de 45 questões" }}
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={4}>
             <DetailedStatisticsCard
-              title="Ciências Humanas"
-              count="2,300"
-              icon={{ color: "error", component: <i className="ni ni-istanbul" /> }}
-              percentage={{ color: "success",  text: "since last week" }}
+              title="Redação ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+              count="960"
+              icon={{ color: "primary", component: <i className="ni ni-align-center" /> }}
+              percentage={{ color: "success", text: "C1:200; C2:160; C3:200; C4:200; C5:200." }}
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={4}>
             <DetailedStatisticsCard
-              title="Ciências da Natureza"
-              count="+3,462"
+              title="Ciências Humanas e suas tecnologias"
+              count="671"
+              icon={{ color: "warning", component: <i className="ni ni-istanbul" /> }}
+              percentage={{ color: "error", text: "Você acertou 35 de 45 questões" }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <DetailedStatisticsCard
+              title="CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS"
+              count="678.6"
               icon={{ color: "success", component: <i className="ni ni-atom" /> }}
-              percentage={{ color: "error", count: "-2%", text: "since last quarter" }}
+              percentage={{ color: "success", text: "Você acertou 35 de 45 questões" }}
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={6}>
             <DetailedStatisticsCard
-              title="Matemática"
-              count="$103,430"
+              title={"MATEMÁTICA E SUAS TECNOLOGIAS ⠀⠀⠀⠀⠀⠀⠀⠀⠀"}
+              count="830.70"
               icon={{ color: "error", component: <i className="ni ni-chart-bar-32" /> }}
-              percentage={{ color: "success", count: "+5%", text: "than last month" }}
+              percentage={{ color: "success", count: "+5%", text: "Você acertou 35 de 45 questões" }}
             />
           </Grid>
-
         </Grid>
 
+        <Grid container spacing={3} mb={3}>
+          <Grid item xs={12} lg={12}>
+            <Streak days={30} dates={[new Date("02/01/2024"), new Date("02/02/2024")]}/>
+          </Grid>
+        </Grid>
 
         <Grid container spacing={3} mb={3}>
 
           <Grid item xs={12} lg={7}>
             <GradientLineChart
-              title="Sales Overview"
+              title="VISÃO GERAL"
               description={
-                <ArgonBox display="flex" alignItems="center">
-                  <ArgonBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                    <Icon sx={{ fontWeight: "bold" }}>arrow_upward</Icon>
-                  </ArgonBox>
+                <ArgonBox >
                   <ArgonTypography variant="button" color="text" fontWeight="medium">
-                    4% more{" "}
-                    <ArgonTypography variant="button" color="text" fontWeight="regular">
-                      in 2022
-                    </ArgonTypography>
+                    Evolução na média TRI
                   </ArgonTypography>
                 </ArgonBox>
               }
@@ -125,68 +132,166 @@ function Default() {
                 labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], //X
                 datasets: [
                   {
-                    label: "Mobile apps",
-                    color: "success",
-                    data: [8,20,35,0,24,4], // Y
+                    label: "Média Simples",
+                    color: "primary",
+                    data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
                   },
                 ],
               }}
             />
           </Grid>
 
+
           <Grid item xs={12} lg={5}>
-            
+            <VerticalBarChart title="Questões certas" chart={{
+              labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+              datasets: [
+                {
+                  label: "Questões certas",
+                  color: "primary",
+                  data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
+                },
+              ],
+            }} />
           </Grid>
-        
+
+        </Grid>
+        <Divider />
+        <Grid container spacing={3} mb={3}>
+          <Grid item xs={12} sm={3} lg={3}>
+            <a href="https://google.com.br">
+              <DefaultInfoCard
+                icon={<i className="ni ni-ruler-pencil" />}
+                color='info'
+                title="Linguagens"
+                description="Simulado"
+              />
+            </a>
+          </Grid>
+          <Grid item xs={12} sm={3} lg={3}>
+            <a href="https://google.com.br">
+              <DefaultInfoCard
+                icon={<i className="ni ni-istanbul" />}
+                color='warning'
+                title="Humanas"
+                description="Simulado"
+              />
+            </a>
+          </Grid>
+          <Grid item xs={12} sm={3} lg={3}>
+            <a href="https://google.com.br">
+              <DefaultInfoCard
+                icon={<i className="ni ni-atom" />}
+                color='success'
+                title="Natureza"
+                description="Simulado"
+              />
+            </a>
+          </Grid>
+          <Grid item xs={12} sm={3} lg={3}>
+            <a href="https://google.com.br">
+              <DefaultInfoCard
+                icon={<i className="ni ni-chart-bar-32" />}
+                color='error'
+                title="Matemática"
+                description="Simulado"
+              />
+            </a>
+          </Grid>
+
+        </Grid>
+        <Grid item xs={12} lg={12} mb={3}>
+          <Card>
+            <ArgonBox p={2} lineHeight={0}>
+              <ArgonTypography variant="h5">Métricas de Prova</ArgonTypography>
+              <ArgonTypography variant="button" color="text" fontWeight="regular">
+                Escolha uma prova para ver os relatórios de desempenho
+              </ArgonTypography>
+            </ArgonBox>
+            <ArgonBox p={2}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <ArgonButton onClick={toogleDesemLC} color="info" fullWidth>
+                    Linguagens e Códigos
+                  </ArgonButton>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <ArgonButton onClick={toogleDesemCH} color="warning" fullWidth>
+                    Ciências Humanas
+                  </ArgonButton>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <ArgonButton onClick={toogleDesemCN} color="success" fullWidth>
+                    Ciências da Natureza
+                  </ArgonButton>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <ArgonButton onClick={toogleDesemMT} color="error" fullWidth>
+                    Matemática
+                  </ArgonButton>
+                </Grid>
+              </Grid>
+            </ArgonBox>
+          </Card>
         </Grid>
 
         <Grid container spacing={3} mb={3}>
-          <Grid item xs={12} md={6} lg={4}>
-            <TodoList />
+
+          <Grid item xs={12} lg={4}>
+            <GradientLineChart
+              title={"Evolução TRI: " + nameMat}
+              chart={{
+                labels: xGraph_DESEM, //X
+                datasets: [
+                  {
+                    label: "Nota TRI",
+                    color: colorGraph,
+                    data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
+                  },
+                ],
+              }}
+            />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <ProgressTrack />
+
+          <Grid item xs={12} lg={4}>
+            <VerticalBarChart title={"Acertos em " + nameMat} chart={{
+              labels: xGraph_DESEM,
+              datasets: [
+                {
+                  label: "Acertos",
+                  color: colorGraph,
+                  data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
+                },
+              ],
+            }} />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-          <Slider />
+
+          <Grid item xs={12} md={4}>
+            <DefaultDoughnutChart title={"Erros por Habilidades: " + nameMat} chart={{
+              labels: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20', 'H21', 'H22', 'H23', 'H24', 'H25', 'H26', 'H27', 'H28', 'H29', 'H30', 'SEM_HAB_DEFINIDA',],
+              datasets: {
+                backgroundColors: ["info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "primary"],
+                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                ,
+              },
+            }} />
           </Grid>
+
+
         </Grid>
 
+        <Divider />
+
         <Grid container spacing={3} mb={3}>
-          <Grid container item xs={12} lg={12} spacing={3}>
-            <Grid item xs={12} height="max-content">
-              <ArgonBox
-                sx={{
-                  "& .MuiTableContainer-root": {
-                    p: 3,
-                  },
-                  "& .MuiTableRow-root:not(:last-child)": {
-                    "& td": {
-                      borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                        `${borderWidth[1]} solid ${borderColor}`,
-                    },
-                  },
-                }}
-              >
-                <Table columns={projectsTableData.columns} rows={projectsTableData.rows} />
-              </ArgonBox>
-            </Grid>
-            <Grid container item xs={12} spacing={3}>
-              <Grid item xs={12} md={6}>
-                <BalanceCard />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <CryptoCard />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <SalesTable title="Sales by Country" rows={salesTableData} />
-            </Grid>
+
+          <Grid item xs={12} md={12}>
+            <Table columns={projectsTableData.columns} rows={projectsTableData.rows} />
+
           </Grid>
+
         </Grid>
 
       </ArgonBox>
-
       <Footer />
 
     </DashboardLayout>

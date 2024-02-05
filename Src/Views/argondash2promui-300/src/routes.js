@@ -96,6 +96,7 @@ import Error500 from "layouts/authentication/error/500";
 import ArgonBox from "components/ArgonBox";
 
 const routes = [
+
   {
     type: "collapse",
     name: "Dashboards",
@@ -520,181 +521,25 @@ const routes = [
     ],
   },
   { type: "divider", key: "divider-1" },
-  { type: "title", title: "Docs", key: "title-docs" },
+  { type: "title", title: "APPs", key: "title-docs" },
+  
   {
     type: "collapse",
-    name: "Basic",
-    key: "basic",
-    icon: <ArgonBox component="i" color="inherit" fontSize="14px" className="ni ni-spaceship" />,
-    collapse: [
-      {
-        name: "Getting Started",
-        key: "getting-started",
-        collapse: [
-          {
-            name: "Overview",
-            key: "overview",
-            href: "https://www.creative-tim.com/learning-lab/react/overview/argon-dashboard/",
-          },
-          {
-            name: "License",
-            key: "license",
-            href: "https://www.creative-tim.com/learning-lab/react/license/argon-dashboard/",
-          },
-          {
-            name: "Quick Start",
-            key: "quick-start",
-            href: "https://www.creative-tim.com/learning-lab/react/quick-start/argon-dashboard/",
-          },
-          {
-            name: "Build Tools",
-            key: "build-tools",
-            href: "https://www.creative-tim.com/learning-lab/react/build-tools/argon-dashboard/",
-          },
-        ],
-      },
-      {
-        name: "Foundation",
-        key: "foundation",
-        collapse: [
-          {
-            name: "Colors",
-            key: "colors",
-            href: "https://www.creative-tim.com/learning-lab/react/colors/argon-dashboard/",
-          },
-          {
-            name: "Grid",
-            key: "grid",
-            href: "https://www.creative-tim.com/learning-lab/react/grid/argon-dashboard/",
-          },
-          {
-            name: "Typography",
-            key: "base-typography",
-            href: "https://www.creative-tim.com/learning-lab/react/base-typography/argon-dashboard/",
-          },
-          {
-            name: "Borders",
-            key: "borders",
-            href: "https://www.creative-tim.com/learning-lab/react/borders/argon-dashboard/",
-          },
-          {
-            name: "Box Shadows",
-            key: "box-shadows",
-            href: "https://www.creative-tim.com/learning-lab/react/box-shadows/argon-dashboard/",
-          },
-          {
-            name: "Functions",
-            key: "functions",
-            href: "https://www.creative-tim.com/learning-lab/react/functions/argon-dashboard/",
-          },
-          {
-            name: "Routing System",
-            key: "routing-system",
-            href: "https://www.creative-tim.com/learning-lab/react/routing-system/argon-dashboard/",
-          },
-        ],
-      },
-    ],
+    name: "Simulador SiSU",
+    key: "sisu",
+    href: "https://sisu.enemaster.app.br",
+    icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-spaceship" />,
+    noCollapse: true,
   },
+  { type: "divider", key: "divider-2" },
+
   {
     type: "collapse",
-    name: "Components",
-    key: "components",
-    icon: <ArgonBox component="i" color="inherit" fontSize="14px" className="ni ni-app" />,
-    collapse: [
-      {
-        name: "Alerts",
-        key: "alerts",
-        href: "https://www.creative-tim.com/learning-lab/react/alerts/argon-dashboard/",
-      },
-      {
-        name: "Avatar",
-        key: "avatar",
-        href: "https://www.creative-tim.com/learning-lab/react/avatar/argon-dashboard/",
-      },
-      {
-        name: "Badge",
-        key: "badge",
-        href: "https://www.creative-tim.com/learning-lab/react/badge/argon-dashboard/",
-      },
-      {
-        name: "Badge Dot",
-        key: "badge-dot",
-        href: "https://www.creative-tim.com/learning-lab/react/badge-dot/argon-dashboard/",
-      },
-      {
-        name: "Box",
-        key: "box",
-        href: "https://www.creative-tim.com/learning-lab/react/box/argon-dashboard/",
-      },
-      {
-        name: "Buttons",
-        key: "buttons",
-        href: "https://www.creative-tim.com/learning-lab/react/buttons/argon-dashboard/",
-      },
-      {
-        name: "Date Picker",
-        key: "date-picker",
-        href: "https://www.creative-tim.com/learning-lab/react/datepicker/argon-dashboard/",
-      },
-      {
-        name: "Dropzone",
-        key: "dropzone",
-        href: "https://www.creative-tim.com/learning-lab/react/dropzone/argon-dashboard/",
-      },
-      {
-        name: "Editor",
-        key: "editor",
-        href: "https://www.creative-tim.com/learning-lab/react/quill/argon-dashboard/",
-      },
-      {
-        name: "Input",
-        key: "input",
-        href: "https://www.creative-tim.com/learning-lab/react/input/argon-dashboard/",
-      },
-      {
-        name: "Pagination",
-        key: "pagination",
-        href: "https://www.creative-tim.com/learning-lab/react/pagination/argon-dashboard/",
-      },
-      {
-        name: "Progress",
-        key: "progress",
-        href: "https://www.creative-tim.com/learning-lab/react/progress/argon-dashboard/",
-      },
-      {
-        name: "Select",
-        key: "select",
-        href: "https://www.creative-tim.com/learning-lab/react/select/argon-dashboard/",
-      },
-      {
-        name: "Snackbar",
-        key: "snackbar",
-        href: "https://www.creative-tim.com/learning-lab/react/snackbar/argon-dashboard/",
-      },
-      {
-        name: "Social Button",
-        key: "social-button",
-        href: "https://www.creative-tim.com/learning-lab/react/social-buttons/argon-dashboard/",
-      },
-      {
-        name: "Tag Input",
-        key: "tag-input",
-        href: "https://www.creative-tim.com/learning-lab/react/tag-input/argon-dashboard/",
-      },
-      {
-        name: "Typography",
-        key: "typography",
-        href: "https://www.creative-tim.com/learning-lab/react/typography/argon-dashboard/",
-      },
-    ],
-  },
-  {
-    type: "collapse",
-    name: "Change Log",
-    key: "changelog",
-    href: "https://github.com/creativetimofficial/ct-argon-dashboard-pro-material-ui/blob/main/CHANGELOG.md",
-    icon: <ArgonBox component="i" color="inherit" fontSize="14px" className="ni ni-align-left-2" />,
+    name: "Suporte",
+    key: "support",
+    route: "/authentication/error/500",
+    component: <Error500 />,
+    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-support-16" />,
     noCollapse: true,
   },
 ];

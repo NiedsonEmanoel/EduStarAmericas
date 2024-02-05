@@ -47,6 +47,17 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     function handleMiniSidenav() {
       setMiniSidenav(dispatch, window.innerWidth < 1200);
     }
+
+    /** 
+     The event listener that's calling the handleMiniSidenav function when resizing the window.
+    */
+    window.addEventListener("resize", handleMiniSidenav);
+
+    // Call the handleMiniSidenav function to set the state with the initial value.
+    handleMiniSidenav();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
 
   // Render all the nested collapse items from the routes.js

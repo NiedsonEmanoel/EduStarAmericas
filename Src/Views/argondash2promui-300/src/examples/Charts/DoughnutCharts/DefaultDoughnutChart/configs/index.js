@@ -19,7 +19,7 @@ import colors from "assets/theme/base/colors";
 
 const { gradients, dark } = colors;
 
-function configs(labels, datasets, cutout = 60) {
+function configs(labels, datasets, cutout = 45) {
   const backgroundColors = [];
 
   if (datasets.backgroundColors) {
@@ -48,9 +48,9 @@ function configs(labels, datasets, cutout = 60) {
           cutout,
           tension: 0.9,
           pointRadius: 2,
-          borderWidth: 2,
+          borderWidth: 3,
           backgroundColor: backgroundColors,
-          fill: false,
+          fill: true,
           data: datasets.data,
         },
       ],
@@ -64,7 +64,7 @@ function configs(labels, datasets, cutout = 60) {
         },
       },
       interaction: {
-        intersect: false,
+        intersect: true,
         mode: "index",
       },
       scales: {
