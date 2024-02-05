@@ -111,8 +111,11 @@ function Default() {
         </Grid>
 
         <Grid container spacing={3} mb={3}>
-          <Grid item xs={12} lg={12}>
-            <Streak days={30} dates={[new Date("02/01/2024"), new Date("02/02/2024")]}/>
+          <Grid item xs={12} lg={12}> 
+          {
+            ////MM-DD-YYYY
+          }
+            <Streak days={30} dates={[new Date("02/01/2024"), new Date("02/02/2024"), new Date("02/03/2024"), new Date("02/04/2024"), new Date("02/05/2024")]}/>
           </Grid>
         </Grid>
 
