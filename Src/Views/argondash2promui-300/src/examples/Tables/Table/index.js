@@ -27,9 +27,15 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
+// @mui material components
+import Grid from "@mui/material/Grid";
+import Icon from "@mui/material/Icon";
+
 // Argon Dashboard 2 PRO MUI components
 import ArgonBox from "components/ArgonBox";
-import ArgonAvatar from "components/ArgonAvatar";
+
+// Argon Dashboard 2 PRO MUI contexts
+import { useArgonController } from "context";
 import ArgonTypography from "components/ArgonTypography";
 
 // Argon Dashboard 2 PRO MUI base styles
@@ -94,7 +100,29 @@ function Table({ columns, rows }) {
           >
             <ArgonBox display="flex" alignItems="center" py={0.5} px={1}>
               <ArgonBox mr={2}>
-                <ArgonAvatar src={row[name][0]} name={row[name][1]} variant="rounded" size="sm" />
+              <Grid item xs={4}>
+                <ArgonBox
+                  variant="gradient"
+                  bgColor={row[name][2]}
+                  width="3rem"
+                  height="3rem"
+                  borderRadius="section"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  ml="auto"
+                >
+                    <ArgonBox
+                      fontSize="1.125rem"
+                      display="grid"
+                      placeItems="center"
+                      color="white"
+                    >
+                      {row[name][0]}
+                    </ArgonBox>
+          
+                </ArgonBox>
+              </Grid>
               </ArgonBox>
               <ArgonTypography variant="button" fontWeight="medium" sx={{ width: "max-content" }}>
                 {row[name][1]}

@@ -29,7 +29,7 @@ function Completion({ value, color }) {
   );
 }
 
-const action = (
+const ação = (
   <Icon
     sx={{
       cursor: "pointer",
@@ -43,83 +43,70 @@ const action = (
   </Icon>
 );
 
-const projectsTableData = {
+const matériasTableData = {
   columns: [
-    { name: "project", align: "left" },
-    { name: "budget", align: "left" },
-    { name: "status", align: "left" },
-    { name: "completion", align: "center" },
-    { name: "action", align: "center" },
-  ],
+    { name: "matéria", align: "left" },
+    { name: "nota", align: "left" },
+    { name: "progresso", align: "center" },
+   ],
 
   rows: [
     {
-      project: [logoSpotify, "Spotift"],
-      budget: (
+      matéria: [<i className="ni ni-ruler-pencil" />, "Linguagens", 'info'],
+      nota: (
         <ArgonTypography variant="caption" color="text" fontWeight="medium">
           $2,500
         </ArgonTypography>
       ),
       status: <ArgonBadgeDot color="info" badgeContent="working" size="xs" sx={{ px: 0 }} />,
-      completion: <Completion value={60} color="info" />,
-      action,
+      progresso: <Completion value={60} color="info" />,
+      ação,
     },
     {
-      project: [logoInvesion, "Invesion"],
-      budget: (
+      matéria: [<i className="ni ni-align-center" />, "Redação", 'primary'],
+      nota: (
         <ArgonTypography variant="caption" color="text" fontWeight="medium">
           $5,000
         </ArgonTypography>
       ),
       status: <ArgonBadgeDot color="success" badgeContent="done" size="xs" sx={{ px: 0 }} />,
-      completion: <Completion value={100} color="success" />,
-      action,
+      progresso: <Completion value={100} color="success" />,
+      ação,
     },
     {
-      project: [logoJira, "Jira"],
-      budget: (
+      matéria: [<i className="ni ni-ruler-pencil" />, "Linguagens", 'info'],
+      nota: (
         <ArgonTypography variant="caption" color="text" fontWeight="medium">
           $3,400
         </ArgonTypography>
       ),
       status: <ArgonBadgeDot color="error" badgeContent="canceled" size="xs" sx={{ px: 0 }} />,
-      completion: <Completion value={30} color="error" />,
-      action,
+      progresso: <Completion value={30} color="error" />,
+      ação,
     },
     {
-      project: [logoSlack, "Slack"],
-      budget: (
+      matéria: [<i className="ni ni-ruler-pencil" />, "Linguagens", 'info'],
+      nota: (
         <ArgonTypography variant="caption" color="text" fontWeight="medium">
           $1,400
         </ArgonTypography>
       ),
       status: <ArgonBadgeDot color="error" badgeContent="canceled" size="xs" sx={{ px: 0 }} />,
-      completion: <Completion value={0} color="error" />,
-      action,
+      progresso: <Completion value={0} color="error" />,
+      ação,
     },
     {
-      project: [logoWebDev, "Webdev"],
-      budget: (
+      matéria: [<i className="ni ni-ruler-pencil" />, "Linguagens", 'info'],
+      nota: (
         <ArgonTypography variant="caption" color="text" fontWeight="medium">
           $14,000
         </ArgonTypography>
       ),
       status: <ArgonBadgeDot color="info" badgeContent="working" size="xs" sx={{ px: 0 }} />,
-      completion: <Completion value={80} color="info" />,
-      action,
-    },
-    {
-      project: [logoXD, "Adobe XD"],
-      budget: (
-        <ArgonTypography variant="caption" color="text" fontWeight="medium">
-          $2,300
-        </ArgonTypography>
-      ),
-      status: <ArgonBadgeDot color="success" badgeContent="done" size="xs" sx={{ px: 0 }} />,
-      completion: <Completion value={100} color="success" />,
-      action,
-    },
+      progresso: <Completion value={80} color="info" />,
+      ação,
+    }
   ],
 };
 
-export default projectsTableData;
+export default matériasTableData;

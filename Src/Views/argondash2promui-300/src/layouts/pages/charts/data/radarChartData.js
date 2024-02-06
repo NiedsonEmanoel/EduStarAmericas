@@ -1,29 +1,26 @@
-/**
-=========================================================
-* Argon Dashboard 2 PRO MUI - v3.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-mui
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+const CHART_COLORS = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
 
 const radarChartData = {
   labels: ['Redação', 'Linguagens', 'Humanas', 'Natureza', 'Matemática'],
   datasets: [
     {
       label: "Nota",
-      color: "primary",
+      borderColor: 'rgb(54, 162, 235)',
+      color: 'info',
+      
       data: [1000, 670.8, 686, 830, 930],
     },
     {
-      label: "corte",
-      color: "dark",
+      label: "",
+      borderColor: "rgb(255, 255, 255)",
       data: [0,0,0,0,0],
     },
   ],

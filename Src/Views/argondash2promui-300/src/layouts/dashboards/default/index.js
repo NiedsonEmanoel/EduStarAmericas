@@ -8,22 +8,18 @@ import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
 import ArgonButton from "components/ArgonButton";
 import { useState } from "react";
-import Streak from "components/StreakModule";
+import Headerer from "./components/Headerer";
 import Card from "@mui/material/Card";
 import Table from "examples/Tables/Table";
 import projectsTableData from "layouts/dashboards/default/data/projectsTableData";
-
 // Argon Dashboard 2 PRO MUI example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DetailedStatisticsCard from "examples/Cards/StatisticsCards/DetailedStatisticsCard";
 import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnutChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
-import PolarChart from "examples/Charts/PolarChart";
-
-// Argon Dashboard 2 PRO MUI base styles
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
+import RadarChart from "examples/Charts/RadarChart";
 import typography from "assets/theme/base/typography";
 
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
@@ -35,32 +31,47 @@ function Default() {
   const [nameMat, setnameMat] = useState('Linguagens')
   const [colorGraph, setcolorGraph] = useState('info')
   const [xGraph_DESEM, setXGraph_DESEM] = useState(["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
+  const bgImage =
+    "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg";
 
-  const toogleDesemLC = (name) => {
+
+  const toogleDesemLC = () => {
     setnameMat('Linguagens')
     setcolorGraph('info')
   }
 
-  const toogleDesemCH = (name) => {
+  const toogleDesemCH = () => {
     setnameMat('Humanas')
     setcolorGraph('warning')
   }
 
-  const toogleDesemCN = (name) => {
+  const toogleDesemCN = () => {
     setnameMat('Natureza')
     setcolorGraph('success')
   }
 
-  const toogleDesemMT = (name) => {
+  const toogleDesemMT = () => {
     setnameMat('Matemática')
     setcolorGraph('error')
   }
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-
-      <ArgonBox py={3}>
+    <DashboardLayout
+      sx={{
+        backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
+          `${linearGradient(
+            rgba(gradients.info.main, 0.6),
+            rgba(gradients.info.state, 0.6)
+          )}, url(${bgImage})`,
+        backgroundPositionY: "50%",
+      }}
+    >
+      <Headerer
+        days={30}
+        dates={[new Date("02/01/2024"), new Date("02/02/2024"), new Date("02/03/2024"), new Date("02/04/2024"), new Date("02/05/2024")]}
+      />
+      <Divider />
+      <ArgonBox>
 
         <Grid container spacing={3} mb={3}>
 
@@ -68,6 +79,7 @@ function Default() {
             <DetailedStatisticsCard
               title="Linguagens, Códigos e suas tecnologias"
               count="686.8"
+              reut='05/02/2024'
               icon={{ color: "info", component: <i className="ni ni-ruler-pencil" /> }}
               percentage={{ color: "success", text: "Você acertou 35 de 45 questões" }}
             />
@@ -77,6 +89,7 @@ function Default() {
             <DetailedStatisticsCard
               title="Redação ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
               count="960"
+              reut='05/02/2024'
               icon={{ color: "primary", component: <i className="ni ni-align-center" /> }}
               percentage={{ color: "success", text: "C1:200; C2:160; C3:200; C4:200; C5:200." }}
             />
@@ -86,6 +99,7 @@ function Default() {
             <DetailedStatisticsCard
               title="Ciências Humanas e suas tecnologias"
               count="671"
+              reut='05/02/2024'
               icon={{ color: "warning", component: <i className="ni ni-istanbul" /> }}
               percentage={{ color: "error", text: "Você acertou 35 de 45 questões" }}
             />
@@ -95,6 +109,7 @@ function Default() {
             <DetailedStatisticsCard
               title="CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS"
               count="678.6"
+              reut='05/02/2024'
               icon={{ color: "success", component: <i className="ni ni-atom" /> }}
               percentage={{ color: "success", text: "Você acertou 35 de 45 questões" }}
             />
@@ -104,61 +119,13 @@ function Default() {
             <DetailedStatisticsCard
               title={"MATEMÁTICA E SUAS TECNOLOGIAS ⠀⠀⠀⠀⠀⠀⠀⠀⠀"}
               count="830.70"
+              reut='05/02/2024'
               icon={{ color: "error", component: <i className="ni ni-chart-bar-32" /> }}
               percentage={{ color: "success", count: "+5%", text: "Você acertou 35 de 45 questões" }}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={3} mb={3}>
-          <Grid item xs={12} lg={12}> 
-          {
-            ////MM-DD-YYYY
-          }
-            <Streak days={30} dates={[new Date("02/01/2024"), new Date("02/02/2024"), new Date("02/03/2024"), new Date("02/04/2024"), new Date("02/05/2024")]}/>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3} mb={3}>
-
-          <Grid item xs={12} lg={7}>
-            <GradientLineChart
-              title="VISÃO GERAL"
-              description={
-                <ArgonBox >
-                  <ArgonTypography variant="button" color="text" fontWeight="medium">
-                    Evolução na média TRI
-                  </ArgonTypography>
-                </ArgonBox>
-              }
-              chart={{
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], //X
-                datasets: [
-                  {
-                    label: "Média Simples",
-                    color: "primary",
-                    data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
-                  },
-                ],
-              }}
-            />
-          </Grid>
-
-
-          <Grid item xs={12} lg={5}>
-            <VerticalBarChart title="Questões certas" chart={{
-              labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-              datasets: [
-                {
-                  label: "Questões certas",
-                  color: "primary",
-                  data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
-                },
-              ],
-            }} />
-          </Grid>
-
-        </Grid>
         <Divider />
         <Grid container spacing={3} mb={3}>
           <Grid item xs={12} sm={3} lg={3}>
@@ -203,6 +170,49 @@ function Default() {
           </Grid>
 
         </Grid>
+        <Divider />
+        <Grid container spacing={3} mb={3}>
+
+          <Grid item xs={12} lg={7}>
+            <DefaultLineChart
+              title="VISÃO GERAL"
+              description={
+                <ArgonBox >
+                  <ArgonTypography variant="button" color="text" fontWeight="medium">
+                    Evolução na média TRI
+                  </ArgonTypography>
+                </ArgonBox>
+              }
+              chart={{
+                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], //X
+                datasets: [
+                  {
+                    label: "Média Simples",
+                    color: "primary",
+                    data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
+                  },
+                ],
+              }}
+            />
+          </Grid>
+
+
+          <Grid item xs={12} lg={5}>
+            <VerticalBarChart title="Questões certas" chart={{
+              labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+              datasets: [
+                {
+                  label: "Questões certas",
+                  color: "primary",
+                  data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
+                },
+              ],
+            }} />
+          </Grid>
+
+        </Grid>
+        <Divider />
+
         <Grid item xs={12} lg={12} mb={3}>
           <Card>
             <ArgonBox p={2} lineHeight={0}>
@@ -241,7 +251,7 @@ function Default() {
         <Grid container spacing={3} mb={3}>
 
           <Grid item xs={12} lg={4}>
-            <GradientLineChart
+            <DefaultLineChart
               title={"Evolução TRI: " + nameMat}
               chart={{
                 labels: xGraph_DESEM, //X
@@ -283,16 +293,7 @@ function Default() {
 
         </Grid>
 
-        <Divider />
 
-        <Grid container spacing={3} mb={3}>
-
-          <Grid item xs={12} md={12}>
-            <Table columns={projectsTableData.columns} rows={projectsTableData.rows} />
-
-          </Grid>
-
-        </Grid>
 
       </ArgonBox>
       <Footer />

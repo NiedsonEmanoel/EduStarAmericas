@@ -8,16 +8,18 @@ import PropTypes from "prop-types";
 const Argon = createContext(null);
 
 // Setting custom name for the context which is visible on react dev tools
-Argon.displayName = "ArgonContext";
+Argon.displayName = "00";
 
 // Argon Dashboard 2 PRO MUI reducer
 function reducer(state, action) {
   switch (action.type) {
     case "MINI_SIDENAV": {
+      
       return { ...state, miniSidenav: action.value };
     }
     case "DARK_SIDENAV": {
-      return { ...state, darkSidenav: action.value };
+      let drksdnv_local = localStorage.getItem('DARK_SIDENAV') === 'true'
+      return { ...state, darkSidenav: drksdnv_local };
     }
     case "SIDENAV_COLOR": {
       return { ...state, sidenavColor: action.value };
@@ -38,7 +40,8 @@ function reducer(state, action) {
       return { ...state, layout: action.value };
     }
     case "DARK_MODE": {
-      return { ...state, darkMode: action.value };
+      let drk_local = localStorage.getItem('DARK_MODE') === 'true'
+      return { ...state, darkMode: drk_local };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -50,14 +53,14 @@ function reducer(state, action) {
 function ArgonControllerProvider({ children }) {
   const initialState = {
     miniSidenav: false,
-    darkSidenav: true,
+    darkSidenav: localStorage.getItem('DARK_SIDENAV')==='true',
     sidenavColor: null,
     transparentNavbar: true,
     fixedNavbar: false,
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
-    darkMode: true,
+    darkMode: localStorage.getItem('DARK_MODE')==='true',
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -85,14 +88,23 @@ ArgonControllerProvider.propTypes = {
 
 // Context module functions
 const setMiniSidenav = (dispatch, value) => dispatch({ type: "MINI_SIDENAV", value });
-const setDarkSidenav = (dispatch, value) => dispatch({ type: "DARK_SIDENAV", value });
+
+const setDarkSidenav = (dispatch, value) => {
+  localStorage.setItem('DARK_SIDENAV', value)
+  dispatch({ type: "DARK_SIDENAV", value })
+};
+
 const setSidenavColor = (dispatch, value) => dispatch({ type: "SIDENAV_COLOR", value });
 const setTransparentNavbar = (dispatch, value) => dispatch({ type: "TRANSPARENT_NAVBAR", value });
 const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", value });
 const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
-const setDarkMode = (dispatch, value) => dispatch({ type: "DARK_MODE", value });
+
+const setDarkMode = (dispatch, value) => {
+  localStorage.setItem('DARK_MODE', value)
+  dispatch({ type: "DARK_MODE", value })
+};
 
 export {
   ArgonControllerProvider,

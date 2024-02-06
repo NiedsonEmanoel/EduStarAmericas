@@ -99,16 +99,19 @@ const routes = [
 
   {
     type: "collapse",
+    name: "Início",
+    key: "home",
+    route: "/home",
+    component: <Default />,
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
     name: "Dashboards",
     key: "dashboards",
     icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
     collapse: [
-      {
-        name: "Início",
-        key: "home",
-        route: "/dashboards/default",
-        component: <Default />,
-      },
       {
         name: "Automotive",
         key: "automotive",

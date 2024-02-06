@@ -50,12 +50,12 @@ function RadarChart({ title, description, chart }) {
   const { data, options } = configs(chart.labels || [], chartDatasets);
 
   const renderChart = (
-    <ArgonBox p={2}>
+    <ArgonBox style={{backgroundColor: 'white'}} p={2}>
       {title || description ? (
-        <ArgonBox px={description ? 1 : 0} pt={description ? 1 : 0}>
+        <ArgonBox  px={description ? 1 : 0} pt={description ? 1 : 0}>
           {title && (
             <ArgonBox mb={1}>
-              <ArgonTypography variant="h6">{title}</ArgonTypography>
+              <ArgonTypography style={{color: '#000'}} variant="h6">{title}</ArgonTypography>
             </ArgonBox>
           )}
           <ArgonBox mb={2}>
@@ -67,7 +67,7 @@ function RadarChart({ title, description, chart }) {
       ) : null}
       {useMemo(
         () => (
-          <ArgonBox p={6}>
+          <ArgonBox p={0}>
             <Radar data={data} options={options} />
           </ArgonBox>
         ),

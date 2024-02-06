@@ -106,7 +106,23 @@ function Charts() {
         <ArgonBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <RadarChart title="Radar chart" chart={radarChartData} />
+              <RadarChart title="Radar chart" chart={{
+                labels: ['Redação', 'Linguagens', 'Humanas', 'Natureza', 'Matemática'],
+                datasets: [
+                  {
+                    label: "Nota",
+                    borderColor: 'rgb(54, 162, 235)',
+                    color: 'info',
+
+                    data: [1000, 670.8, 686, 830, 930],
+                  },
+                  {
+                    label: "",
+                    borderColor: "rgb(255, 255, 255)",
+                    data: [0, 0, 0, 0, 0],
+                  },
+                ],
+              }} />
             </Grid>
             <Grid item xs={12} md={6}>
               <PolarChart title="Polar chart" chart={polarChartData} />
