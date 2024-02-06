@@ -45,8 +45,6 @@ class PDF(FPDF):
         self.cell(0, 8, '     '+str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
 def questHab(dfResult_CN, flashname, flashstr):
-    dItens = pd.read_csv("https://cdn.enemaster.app.br/gerador/provasOrdernadasPorTri.csv", encoding='utf-8', decimal=',')
-    # Criar um modelo para os flashcards
     modelo = genanki.Model(
         187333333,
         'enemaster',
@@ -193,7 +191,7 @@ def questHab(dfResult_CN, flashname, flashstr):
     pdf.add_page()
 
     pdf.set_font('Times', 'B', 12)
-    img_dir = f'images/'  # Diretório local para salvar as imagens
+    img_dir = f'bancoitens/'  # Diretório local para salvar as imagens
 
     # Criar diretório se não existir
     if not os.path.exists(img_dir):
@@ -295,6 +293,10 @@ def questHab(dfResult_CN, flashname, flashstr):
 
     return str(flashname)
 
-dItens = dItens[dItens['SG_AREA'] == 'MT']
-dItens = dItens[dItens['CO_HABILIDADE'] == 1]
-lt = questHab(dItens, 'H1', 'Questões::H1')
+
+dItens = pd.read_csv("../../../Modules/gerador/provasOrdernadasPorTri.csv", encoding='utf-8', decimal=',')
+
+
+dItens = dItens[dItens['SG_AREA'] == 'LC']
+dItens = dItens[dItens['CO_HABILIDADE'] == 2]
+lt = questHab(dItens, 'H2', 'Questões::H2')
