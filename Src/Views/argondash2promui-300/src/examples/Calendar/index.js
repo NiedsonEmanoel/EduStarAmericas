@@ -76,6 +76,7 @@ function Calendar({ header, ...rest }) {
         <FullCalendar
           {...rest}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          
           events={events}
           height="100%"
         />

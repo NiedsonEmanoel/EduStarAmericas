@@ -36,7 +36,6 @@ Coded by www.creative-tim.com
 */
 
 // Argon Dashboard 2 PRO MUI layouts
-import Landing from "layouts/dashboards/landing";
 import Default from "layouts/dashboards/default";
 import Automotive from "layouts/dashboards/automotive";
 import SmartHome from "layouts/dashboards/smart-home";
@@ -104,6 +103,15 @@ const routes = [
     route: "/home",
     component: <Default />,
     icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Cronograma",
+    key: "cronograma",
+    route: "/cronograma",
+    component: <Calendar />,
+    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-calendar-grid-58" />,
     noCollapse: true,
   },
   {
