@@ -12,8 +12,8 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useMemo } from "react";
-
+import { useMemo, useState } from "react";
+import React from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -35,6 +35,27 @@ import ProductivityChart from "layouts/applications/calendar/components/Producti
 import calendarEventsData from "layouts/applications/calendar/data/calendarEventsData";
 
 function Calendar() {
+  const calendarRef = React.useRef()
+  const [calendarEvents, setEvents] = useState(calendarEventsData)
+  function handleUpdateState() {
+
+    const calendarApi = CalendarRef.current.getApi()
+    calendarApi.unselect()
+
+  }
+
+  function confirmation(dateInfo) {
+    console.log(`dateInfo:`, dateInfo.dateStr);
+    let answer = window.confirm("create event?")
+    if(answer){
+        const payload = { title: "event " + calendarEvents.length, start: dateInfo.dateStr }
+        //dispatchEvents({type: actions.EVENT_ADD, payload})
+        setEvents([...calendarEvents, payload])
+        //calendarRef.current.props.events = [...calendarEvents, payload]
+        console.log(calendarRef.current);
+    }
+}
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -44,19 +65,36 @@ function Calendar() {
         </ArgonBox>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
-            {useMemo(
-              () => (
-                <EventCalendar
-                  initialView="dayGridMonth"
-                  initialDate="2021-08-10"
-                  events={calendarEventsData}
-                  selectable
-                  editable
-                />
-              ),
-              [calendarEventsData]
-            )}
+
+            <EventCalendar
+              ref={calendarRef}
+              initialView="timeGridDay"
+              initialDate={new Date}
+              locale={'pt-br'}
+              slotMinTime="7:00:00"
+              allDaySlot={false}
+              dateClick={confirmation}
+              eventClick={(info) => {
+                let tituloParaExcluir = info.event.title
+                let eventos = calendarEvents.filter(function(evento) {
+                  return evento.title !== tituloParaExcluir;
+                });
+                info.event.remove()
+                setEvents(eventos)
+              }}
+              slotMaxTime="22:00:00"
+              headerToolbar={{
+                left: "prev next today",
+                center: "title",
+                right: "timeGridDay timeGridWeek dayGridMonth"
+              }}
+
+              events={calendarEvents}
+              selectable
+              editable
+            />
           </Grid>
+        
           <Grid item xs={12} xl={3}>
             <ArgonBox mb={3}>
               <NextEvents />

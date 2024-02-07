@@ -114,6 +114,8 @@ const routes = [
     icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-calendar-grid-58" />,
     noCollapse: true,
   },
+  { type: "title", title: "Dev", key: "title-pages" },
+
   {
     type: "collapse",
     name: "Dashboards",
@@ -153,7 +155,6 @@ const routes = [
       { name: "CRM", key: "crm", route: "/dashboards/crm", component: <CRM /> },
     ],
   },
-  { type: "title", title: "Pages", key: "title-pages" },
   {
     type: "collapse",
     name: "Pages",
