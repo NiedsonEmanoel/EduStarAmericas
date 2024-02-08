@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -25,17 +25,11 @@ import ArgonTypography from "components/ArgonTypography";
 import ArgonButton from "components/ArgonButton";
 
 // Argon Dashboard 2 PRO MUI example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Argon Dashboard 2 PRO MUI base styles
 import typography from "assets/theme/base/typography";
 
-// Authentication layout components
-import Footer from "layouts/authentication/components/Footer";
-
-// Argon Dashboard 2 PRO MUI page layout routes
-import pageRoutes from "page.routes";
 
 // Images
 import bgImage from "assets/images/illustrations/404.svg";
@@ -45,16 +39,6 @@ function Error404() {
 
   return (
     <PageLayout white>
-      <DefaultNavbar
-        routes={pageRoutes}
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/argon-dashboard-pro-material-ui",
-          label: "Buy Now",
-          color: "dark",
-          variant: "gradient",
-        }}
-      />
       <ArgonBox
         minHeight="100vh"
         sx={{
@@ -74,21 +58,22 @@ function Error404() {
               lineHeight={1.2}
               mb={2}
             >
-              Error 404
+              Erro 404
             </ArgonBox>
             <ArgonTypography variant="h2" color="dark" fontWeight="bold">
-              Erm. Page not found
+              Erm. Página não encontrada... 
             </ArgonTypography>
             <ArgonTypography variant="body1" color="text">
-              We suggest you to go to the homepage while we solve this issue.
+              Sugerimos que volte a página inicial enquanto resolvemos isso.
             </ArgonTypography>
+            <ArgonBox component={NavLink} to="/home"  >
             <ArgonButton variant="gradient" color="dark" sx={{ mt: 5 }}>
-              Go to Homepage
+              Página Inicial
             </ArgonButton>
+            </ArgonBox>
           </Grid>
         </Grid>
       </ArgonBox>
-      <Footer />
     </PageLayout>
   );
 }

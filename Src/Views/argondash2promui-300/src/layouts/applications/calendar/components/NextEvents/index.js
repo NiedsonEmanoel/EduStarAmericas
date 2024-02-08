@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
+import { Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Argon Dashboard 2 PRO MUI components
@@ -23,48 +24,73 @@ import ArgonTypography from "components/ArgonTypography";
 // Argon Dashboard 2 PRO MUI example components
 import DefaultItem from "examples/Items/DefaultItem";
 
-function NextEvents() {
+
+function renderEvents(events) {
+
+
+  let filtraUtil = events.filter(function (evento) {
+    return evento.className !== 'dark'
+  })
+
+  let eventosFiltrados = filtraUtil.filter(function (evento) {
+    let dataAtual = new Date();
+    let dataEventoEnd = new Date(evento.end);
+
+    return dataEventoEnd >= dataAtual;
+  });
+
+  let eventosRecentes = eventosFiltrados.slice(0, 9);
+
+
+
+  return (
+
+    <>
+      {eventosRecentes.length !== 0 ?
+        eventosRecentes.map((event) => {
+          let stre = new Date(event.start)
+          stre = stre.toLocaleString('pt-br')
+          return (
+            <>
+              <ArgonBox>
+                <DefaultItem
+                  color={event.className}
+                  icon={<i className="ni ni-align-center" />}
+                  title={event.title}
+                  description={stre}
+                />
+              </ArgonBox>
+              <Divider />
+            </>
+          )
+        })
+        :
+        <>
+          <ArgonBox>
+            <DefaultItem
+              color={'primary'}
+              icon={<i className="ni ni-planet" />}
+              title={'Sem eventos'}
+              description={'Não há eventos de estudo cadastrados. Clique no calendário e crie o primero.'}
+            />
+          </ArgonBox>
+          <Divider />
+        </>}
+    </>
+  );
+}
+
+function NextEvents(props) {
   return (
     <Card sx={{ height: "100%" }}>
       <ArgonBox pt={2} px={2}>
         <ArgonTypography variant="h6" fontWeight="medium">
-          Next events
+          Próximos eventos
         </ArgonTypography>
       </ArgonBox>
-      <ArgonBox p={2}>
-        <DefaultItem icon="paid" title="Cyber Week" description="27 March 2020, at 12:30 PM" />
-        <ArgonBox mt={3.5}>
-          <DefaultItem
-            color="primary"
-            icon="notifications"
-            title="Meeting with Marry"
-            description="24 March 2020, at 10:00 PM"
-          />
-        </ArgonBox>
-        <ArgonBox mt={3.5}>
-          <DefaultItem
-            color="success"
-            icon="menu_book"
-            title="Book Deposit Hall"
-            description="25 March 2021, at 9:30 AM"
-          />
-        </ArgonBox>
-        <ArgonBox mt={3.5}>
-          <DefaultItem
-            color="warning"
-            icon="local_shipping"
-            title="Shipment Deal UK"
-            description="25 March 2021, at 2:00 PM"
-          />
-        </ArgonBox>
-        <ArgonBox mt={3.5}>
-          <DefaultItem
-            color="error"
-            icon="palette"
-            title="Verify Dashboard Color Palette"
-            description="26 March 2021, at 9:00 AM"
-          />
-        </ArgonBox>
+      <Divider />
+      <ArgonBox pl={2} pr={2} pb={2}>
+        {renderEvents(props.events)}
       </ArgonBox>
     </Card>
   );

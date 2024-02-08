@@ -19,7 +19,7 @@ import Grid from "@mui/material/Grid";
 
 // Argon Dashboard 2 PRO MUI components
 import ArgonBox from "components/ArgonBox";
-
+import Headerer from "layouts/dashboards/default/components/Headerer";
 // Argon Dashboard 2 PRO MUI example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -33,36 +33,41 @@ import ProductivityChart from "layouts/applications/calendar/components/Producti
 
 // Data
 import calendarEventsData from "layouts/applications/calendar/data/calendarEventsData";
+const bgImage =
+  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg";
+
 
 function Calendar() {
   const calendarRef = React.useRef()
-  const [calendarEvents, setEvents] = useState(calendarEventsData)
-  function handleUpdateState() {
+  let preJEvents = localStorage.getItem('events')
+  preJEvents = JSON.parse(preJEvents)
+  if (preJEvents === null) {preJEvents = []}
 
-    const calendarApi = CalendarRef.current.getApi()
-    calendarApi.unselect()
+  const [calendarEvents, setEvents] = useState(preJEvents)
 
+  const handleEvents = (events) =>{
+    setEvents(events)
+    localStorage.setItem('events', JSON.stringify(events))
   }
 
-  function confirmation(dateInfo) {
-    console.log(`dateInfo:`, dateInfo.dateStr);
-    let answer = window.confirm("create event?")
-    if(answer){
-        const payload = { title: "event " + calendarEvents.length, start: dateInfo.dateStr }
-        //dispatchEvents({type: actions.EVENT_ADD, payload})
-        setEvents([...calendarEvents, payload])
-        //calendarRef.current.props.events = [...calendarEvents, payload]
-        console.log(calendarRef.current);
-    }
-}
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <ArgonBox pt={3}>
-        <ArgonBox display="flex" justifyContent="flex-end" mt={1} mb={4} mx={2}>
-          <Header />
-        </ArgonBox>
+    <DashboardLayout
+      sx={{
+        backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
+          `${linearGradient(
+            rgba(gradients.info.main, 0.6),
+            rgba(gradients.info.state, 0.6)
+          )}, url(${bgImage})`,
+        backgroundPositionY: "50%",
+      }}
+    >
+      <Headerer
+        days={7}
+        dates={[new Date("02/01/2024"), new Date("02/02/2024"), new Date("02/03/2024"), new Date("02/04/2024"), new Date("02/05/2024"), new Date()]}
+      />
+
+      <ArgonBox pt={2}>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
 
@@ -70,22 +75,94 @@ function Calendar() {
               ref={calendarRef}
               initialView="timeGridWeek"
               initialDate={new Date}
+
               firstDay={1}
+              nowIndicator={true}
               locale={'pt-br'}
+              weekNumbers
+              weekText=''
               slotMinTime="8:00:00"
               allDaySlot={false}
-              dateClick={confirmation}
+
+              eventDrop={(info) => {
+                let eventos = calendarEvents
+                // console.log(calendarEvents, , )
+                let tituloParaPesquisar = info.event.title;
+                let novoStart = info.event.start;
+                let novoEnd = info.event.end;
+
+                // Filtra os eventos com o título desejado
+                let eventosFiltrados = eventos.filter(function (evento) {
+                  return evento.title === tituloParaPesquisar;
+                });
+
+                // Verifica se foram encontrados eventos com o título especificado
+                if (eventosFiltrados.length > 0) {
+                  // Encontra o evento com o start mais recente
+                  let eventoMaisRecente = eventosFiltrados.reduce(function (prev, current) {
+                    return (new Date(current.start) > new Date(prev.start)) ? current : prev;
+                  });
+
+                  // Atualiza o start e end do evento mais recente com os novos valores
+                  eventoMaisRecente.start = novoStart;
+                  eventoMaisRecente.end = novoEnd;
+
+                  handleEvents(eventos); // Output para verificar as mudanças
+                }
+              }}
+
+              eventResize={(info) => {
+                let eventos = calendarEvents
+                // console.log(calendarEvents, , )
+                let tituloParaPesquisar = info.event.title;
+                let novoStart = info.event.start;
+                let novoEnd = info.event.end;
+
+                // Filtra os eventos com o título desejado
+                let eventosFiltrados = eventos.filter(function (evento) {
+                  return evento.title === tituloParaPesquisar;
+                });
+
+                // Verifica se foram encontrados eventos com o título especificado
+                if (eventosFiltrados.length > 0) {
+                  // Encontra o evento com o start mais recente
+                  let eventoMaisRecente = eventosFiltrados.reduce(function (prev, current) {
+                    return (new Date(current.start) > new Date(prev.start)) ? current : prev;
+                  });
+
+                  // Atualiza o start e end do evento mais recente com os novos valores
+                  eventoMaisRecente.start = novoStart;
+                  eventoMaisRecente.end = novoEnd;
+
+                  handleEvents(eventos); // Output para verificar as mudanças
+                }
+              }}
+
+              select={(info) => {
+                if (info.view.type === 'dayGridMonth') { return 0 }
+                let answer = window.confirm("create event?")
+                if (answer) {
+                  const payload = { title: ("event id:"+calendarEvents.length), start: info.start, end: info.end, className: "success" }
+                  //dispatchEvents({type: actions.EVENT_ADD, payload})
+                  handleEvents([...calendarEvents, payload])
+                }
+
+              }}
+
               eventClick={(info) => {
+                if (info.view.type === 'dayGridMonth') { return 0 }
                 let tituloParaExcluir = info.event.title
-                let eventos = calendarEvents.filter(function(evento) {
+                let eventos = calendarEvents.filter(function (evento) {
                   return evento.title !== tituloParaExcluir;
                 });
                 info.event.remove()
-                setEvents(eventos)
+                handleEvents(eventos)
               }}
+
+
               slotMaxTime="21:00:00"
               headerToolbar={{
-                left: "prev next today",
+                left: "prev today next",
                 center: "title",
                 right: "timeGridDay timeGridWeek dayGridMonth"
               }}
@@ -93,7 +170,7 @@ function Calendar() {
                 today: 'Hoje',
                 month: 'Mês',
                 week: 'Semana',
-                day: 'Dia'
+                day: 'Dia',
               }}
 
               events={calendarEvents}
@@ -101,10 +178,10 @@ function Calendar() {
               editable
             />
           </Grid>
-        
+
           <Grid item xs={12} xl={3}>
             <ArgonBox mb={3}>
-              <NextEvents />
+              <NextEvents events={calendarEvents}/>
             </ArgonBox>
             <ArgonBox mb={3}>
               <ProductivityChart />

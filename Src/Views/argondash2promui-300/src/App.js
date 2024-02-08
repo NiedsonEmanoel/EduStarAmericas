@@ -76,7 +76,7 @@ export default function App() {
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
-     // setMiniSidenav(dispatch, false);
+      setMiniSidenav(dispatch, false);
       setOnMouseEnter(true);
     }
   };
@@ -84,7 +84,7 @@ export default function App() {
   // Close sidenav when mouse leave mini sidenav
   const handleOnMouseLeave = () => {
     if (onMouseEnter) {
-    //  setMiniSidenav(dispatch, true);
+      setMiniSidenav(dispatch, true);
       setOnMouseEnter(false);
     }
   };
@@ -156,7 +156,7 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/home" />} />
+          <Route path="*" element={<Navigate to="/error/404" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -179,7 +179,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/home" />} />
+        <Route path="*" element={<Navigate to="/error/404" />} />
       </Routes>
     </ThemeProvider>
   );

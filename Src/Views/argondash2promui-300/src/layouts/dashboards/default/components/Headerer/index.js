@@ -58,7 +58,7 @@ function Headerer(props) {
   return (
     <ArgonBox position="relative">
       <DashboardNavbar absolute light />
-      <ArgonBox height="220px" />
+      <ArgonBox height="210px" />
       <Card
 
       >

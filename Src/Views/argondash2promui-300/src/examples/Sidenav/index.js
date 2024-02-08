@@ -63,15 +63,16 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   // Render all the nested collapse items from the routes.js
   const renderNestedCollapse = (collapse) => {
     const template = collapse.map(({ name, route, key, href }) =>
-      href ? (
-        <Link key={key} href={href} target="_blank" rel="noreferrer">
-          <SidenavItem name={name} nested />
-        </Link>
-      ) : (
-        <NavLink to={route} key={key}>
-          <SidenavItem name={name} active={route === pathname} nested />
-        </NavLink>
-      )
+      key !== 'noside' ?
+        href ? (
+          <Link key={key} href={href} target="_blank" rel="noreferrer">
+            <SidenavItem name={name} nested />
+          </Link>
+        ) : (
+          <NavLink to={route} key={key}>
+            <SidenavItem name={name} active={route === pathname} nested />
+          </NavLink>
+        ) : <></>
     );
 
     return template;
@@ -79,106 +80,110 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   // Render the all the collpases from the routes.js
   const renderCollapse = (collapses) =>
-    collapses.map(({ name, collapse, route, href, key }) => {
-      let returnValue;
 
-      if (collapse) {
-        returnValue = (
-          <SidenavItem
-            key={key}
-            name={name}
-            active={key === itemName}
-            open={openNestedCollapse === name}
-            onClick={() =>
-              openNestedCollapse === name
-                ? setOpenNestedCollapse(false)
-                : setOpenNestedCollapse(name)
-            }
-          >
-            {renderNestedCollapse(collapse)}
-          </SidenavItem>
-        );
-      } else {
-        returnValue = href ? (
-          <Link href={href} key={key} target="_blank" rel="noreferrer">
-            <SidenavItem name={name} active={key === itemName} />
-          </Link>
-        ) : (
-          <NavLink to={route} key={key}>
-            <SidenavItem name={name} active={key === itemName} />
-          </NavLink>
-        );
+    collapses.map(({ name, collapse, route, href, key }) => {
+
+      let returnValue;
+      if (key !== 'noside') {
+        if (collapse) {
+          returnValue = (
+            <SidenavItem
+              key={key}
+              name={name}
+              active={key === itemName}
+              open={openNestedCollapse === name}
+              onClick={() =>
+                openNestedCollapse === name
+                  ? setOpenNestedCollapse(false)
+                  : setOpenNestedCollapse(name)
+              }
+            >
+              {renderNestedCollapse(collapse)}
+            </SidenavItem>
+          );
+        } else {
+          returnValue = href ? (
+            <Link href={href} key={key} target="_blank" rel="noreferrer">
+              <SidenavItem name={name} active={key === itemName} />
+            </Link>
+          ) : (
+            <NavLink to={route} key={key}>
+              <SidenavItem name={name} active={key === itemName} />
+            </NavLink>
+          );
+        }
+        return <SidenavList key={key}>{returnValue}</SidenavList>;
       }
-      return <SidenavList key={key}>{returnValue}</SidenavList>;
     });
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
     ({ type, name, icon, title, collapse, noCollapse, key, href, route }) => {
       let returnValue;
-
-      if (type === "collapse") {
-        if (href) {
-          returnValue = (
-            <Link href={href} key={key} target="_blank" rel="noreferrer">
+      if (key !== 'noside') {
+        if (type === "collapse") {
+          if (href) {
+            returnValue = (
+              <Link href={href} key={key} target="_blank" rel="noreferrer">
+                <SidenavCollapse
+                  name={name}
+                  icon={icon}
+                  active={key === collapseName}
+                  noCollapse={noCollapse}
+                />
+              </Link>
+            );
+          } else if (noCollapse && route) {
+            returnValue = (
+              <NavLink to={route} key={key}>
+                <SidenavCollapse
+                  name={name}
+                  icon={icon}
+                  noCollapse={noCollapse}
+                  active={key === collapseName}
+                >
+                  {collapse ? renderCollapse(collapse) : null}
+                </SidenavCollapse>
+              </NavLink>
+            );
+          } else {
+            returnValue = (
               <SidenavCollapse
+                key={key}
                 name={name}
                 icon={icon}
                 active={key === collapseName}
-                noCollapse={noCollapse}
-              />
-            </Link>
-          );
-        } else if (noCollapse && route) {
-          returnValue = (
-            <NavLink to={route} key={key}>
-              <SidenavCollapse
-                name={name}
-                icon={icon}
-                noCollapse={noCollapse}
-                active={key === collapseName}
+                open={openCollapse === key}
+                onClick={() => (openCollapse === key ? setOpenCollapse(false) : setOpenCollapse(key))}
               >
                 {collapse ? renderCollapse(collapse) : null}
               </SidenavCollapse>
-            </NavLink>
-          );
-        } else {
+            );
+          }
+        } else if (type === "title") {
           returnValue = (
-            <SidenavCollapse
+            <ArgonTypography
               key={key}
-              name={name}
-              icon={icon}
-              active={key === collapseName}
-              open={openCollapse === key}
-              onClick={() => (openCollapse === key ? setOpenCollapse(false) : setOpenCollapse(key))}
+              color={darkSidenav ? "white" : "dark"}
+              display="block"
+              variant="caption"
+              fontWeight="bold"
+              textTransform="uppercase"
+              opacity={0.6}
+              pl={3}
+              mt={2}
+              mb={1}
+              ml={1}
             >
-              {collapse ? renderCollapse(collapse) : null}
-            </SidenavCollapse>
+              {title}
+            </ArgonTypography>
           );
+        } else if (type === "divider") {
+          returnValue = <Divider key={key} light={darkSidenav} />;
         }
-      } else if (type === "title") {
-        returnValue = (
-          <ArgonTypography
-            key={key}
-            color={darkSidenav ? "white" : "dark"}
-            display="block"
-            variant="caption"
-            fontWeight="bold"
-            textTransform="uppercase"
-            opacity={0.6}
-            pl={3}
-            mt={2}
-            mb={1}
-            ml={1}
-          >
-            {title}
-          </ArgonTypography>
-        );
-      } else if (type === "divider") {
-        returnValue = <Divider key={key} light={darkSidenav} />;
-      }
 
-      return returnValue;
+        return returnValue;
+      }
     }
   );
 
@@ -198,7 +203,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </ArgonTypography>
         </ArgonBox>
-        <ArgonBox component={NavLink} to="/" display="flex" alignItems="center">
+        <ArgonBox component={NavLink} to="/home" display="flex" alignItems="center">
           {brand && (
             <ArgonBox component="img" src={brand} alt="Enemaster.app" width="2rem" mr={0.25} />
           )}

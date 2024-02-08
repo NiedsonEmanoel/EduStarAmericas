@@ -518,8 +518,8 @@ const routes = [
         collapse: [
           {
             name: "Error 404",
-            key: "error-404",
-            route: "/authentication/error/404",
+            key: "noside",
+            route: "/error/404",
             component: <Error404 />,
           },
           {

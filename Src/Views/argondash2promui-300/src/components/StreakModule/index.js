@@ -17,12 +17,11 @@ import PropTypes from "prop-types";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-// Argon Dashboard 2 PRO MUI contexts
-import { useArgonController } from "context";
+import typography from "assets/theme/base/typography";
 
 function renderDays(list) {
     return (
-        <ArgonBox display="flex" style={{ flexWrap: 'wrap' }} justifyContent="space-around" pt={1} px={1} pb={1}>
+        <ArgonBox mb={1} display="flex" style={{ flexWrap: 'wrap' }} justifyContent="space-around" pt={1} px={1} pb={1}>
             {list.map((data) => (
                 <Tooltip title={data.valor === true ? data.data + ' - Parabéns 😎' : data.data + " - Sem estudo registrado 😥"} placement="top">
                     <ArgonButton variant="contained" color={data.valor == true ? 'success' : 'error'} size="small" circular iconOnly>
@@ -35,11 +34,7 @@ function renderDays(list) {
 }
 
 
-function Streak({ bgColor, title, count, percentage, icon, direction, dates, days }) {
-    const [controller] = useArgonController();
-    const { darkMode } = controller;
-    let padds = 5
-    let anapad = 0
+function Streak({ dates, days }) {
 
     const l = summary({ dates });
     let actStreak = l.currentStreak
@@ -52,32 +47,40 @@ function Streak({ bgColor, title, count, percentage, icon, direction, dates, day
     }
     listaDeDatas.reverse()
 
+    const { size } = typography;
+
     return (
         <Card>
-            <ArgonBox
-                bgColor={bgColor === "white" && darkMode ? "transparent" : bgColor}
-                variant={bgColor === "white" && darkMode ? "contained" : "gradient"}
-            >
-                <ArgonBox p={2}>
-
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <ArgonBox >
-                                <ArgonBox >
-                                    <ArgonTypography textTransform="uppercase" variant="h5">{'Últimos ' + length + ' dias de estudos'}</ArgonTypography>
-                                    <ArgonTypography variant="button" color="text" fontWeight="regular">
-                                        {'Você está há ' + actStreak + ' dias seguidos estudando. Seu máximo foi ' + longestStreak + ' dias sem falhar.'}
-                                    </ArgonTypography>
+            <ArgonBox >
+                <Grid container>
+                    <Grid item xs={12}>
+                        <ArgonBox >
+                            <ArgonBox p={2}>
+                                <ArgonBox display="flex" justifyContent="space-between">
+                                    <ArgonBox>
+                                        <ArgonTypography variant="h6" fontWeight="medium" >
+                                            {'Últimos ' + length + ' dias de estudos'}</ArgonTypography>
+                                        <ArgonBox display="flex" alignItems="center">
+                                            <ArgonBox fontSize={size.lg} color={actStreak == 0 ? 'error' : 'success'} mb={0.3} mr={0.5} lineHeight={0}>
+                                                <Icon sx={{ fontWeight: "bold" }}>{actStreak == 0 ? 'arrow_downward' : 'arrow_upward'}</Icon>
+                                            </ArgonBox>
+                                            <ArgonTypography variant="button"  fontWeight="medium">
+                                                {'Você está há ' + actStreak + ' dias seguidos estudando. '}
+                                                <ArgonTypography variant="button"  fontWeight="regular">
+                                                    {'Seu máximo foi ' + longestStreak + ' dias sem falhar.'}
+                                                </ArgonTypography>
+                                            </ArgonTypography>
+                                        </ArgonBox>
+                                    </ArgonBox>
                                 </ArgonBox>
-
-                                {renderDays(listaDeDatas)}
-
                             </ArgonBox>
-                        </Grid>
+                            {renderDays(listaDeDatas)}
+                        </ArgonBox>
 
                     </Grid>
-                </ArgonBox>
+                </Grid>
             </ArgonBox>
+
         </Card>
     );
 }
@@ -148,7 +151,6 @@ function sd(props) {
     return (
         <Card>
             <div style={{ marginLeft: 10, marginTop: 5 }}>
-
 
             </div>
 

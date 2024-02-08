@@ -54,7 +54,7 @@ export default styled(Box)(({ theme, ownerState }) => {
     "& .fc .fc-col-header-cell-cushion": {
       fontSize: size.sm,
       fontWeight: fontWeightMedium,
-      color: grey[500],
+      color: dark,
     },
 
     "& .fc .fc-daygrid-day-number": {
