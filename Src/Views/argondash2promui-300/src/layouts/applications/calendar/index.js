@@ -68,10 +68,11 @@ function Calendar() {
 
             <EventCalendar
               ref={calendarRef}
-              initialView="timeGridDay"
+              initialView="timeGridWeek"
               initialDate={new Date}
+              firstDay={1}
               locale={'pt-br'}
-              slotMinTime="7:00:00"
+              slotMinTime="8:00:00"
               allDaySlot={false}
               dateClick={confirmation}
               eventClick={(info) => {
@@ -82,11 +83,17 @@ function Calendar() {
                 info.event.remove()
                 setEvents(eventos)
               }}
-              slotMaxTime="22:00:00"
+              slotMaxTime="21:00:00"
               headerToolbar={{
                 left: "prev next today",
                 center: "title",
                 right: "timeGridDay timeGridWeek dayGridMonth"
+              }}
+              buttonText={{
+                today: 'Hoje',
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia'
               }}
 
               events={calendarEvents}

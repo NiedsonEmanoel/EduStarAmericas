@@ -59,7 +59,7 @@ function Calendar({ header, ...rest }) {
     : [];
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card >
       <ArgonBox pt={2} px={2} lineHeight={1}>
         {header.title ? (
           <ArgonTypography variant="h6" fontWeight="medium" textTransform="capitalize">
