@@ -41,15 +41,21 @@ function renderEvents(events) {
 
   let eventosRecentes = eventosFiltrados.slice(0, 9);
 
-
-
   return (
 
     <>
       {eventosRecentes.length !== 0 ?
         eventosRecentes.map((event) => {
           let stre = new Date(event.start)
-          stre = stre.toLocaleString('pt-br')
+          let acre = new Date(event.end)
+
+          // Formata a data e hora para o formato dd/mm/yyyy, hh:mm
+          stre = stre.toLocaleString('pt-br', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+          // Formata a hora para o fuso horário de Acre, apenas hh:mm
+          let acreTime = acre.toLocaleTimeString('pt-br', { hour: '2-digit', minute: '2-digit' });
+
+          stre = 'Em: ' + stre.toLocaleString('pt-br') 
           return (
             <>
               <ArgonBox>
@@ -57,7 +63,7 @@ function renderEvents(events) {
                   color={event.className}
                   icon={<i className="ni ni-align-center" />}
                   title={event.title}
-                  description={stre}
+                  description={(stre + ', até: ' + acreTime+'.')}
                 />
               </ArgonBox>
               <Divider />

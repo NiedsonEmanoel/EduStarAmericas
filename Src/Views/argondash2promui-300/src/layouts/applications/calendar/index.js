@@ -41,12 +41,14 @@ function Calendar() {
   const calendarRef = React.useRef()
   let preJEvents = localStorage.getItem('events')
   preJEvents = JSON.parse(preJEvents)
-  if (preJEvents === null) {preJEvents = []}
+  if (preJEvents === null) { preJEvents = [] }
 
   const [calendarEvents, setEvents] = useState(preJEvents)
+  const [rerender, setrereder] = useState(true)
 
-  const handleEvents = (events) =>{
+  const handleEvents = (events) => {
     setEvents(events)
+    setrereder(!rerender)
     localStorage.setItem('events', JSON.stringify(events))
   }
 
@@ -70,118 +72,125 @@ function Calendar() {
       <ArgonBox pt={2}>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
-{}
-            <EventCalendar
-              ref={calendarRef}
-              initialView="timeGridWeek"
-              initialDate={new Date}
+            {useMemo(
+              () => (
+                <EventCalendar
+                  ref={calendarRef}
+                  initialView="timeGridWeek"
+                  initialDate={new Date}
 
-              firstDay={1}
-              nowIndicator={true}
-              locale={'pt-br'}
-              weekNumbers
-              weekText=''
-              slotMinTime="8:00:00"
-              allDaySlot={false}
+                  firstDay={1}
+                  nowIndicator={true}
+                  locale={'pt-br'}
+                  weekNumbers
+                  weekText=''
+                  slotMinTime="8:00:00"
+                  allDaySlot={false}
 
-              eventDrop={(info) => {
-                let eventos = calendarEvents
-                // console.log(calendarEvents, , )
-                let tituloParaPesquisar = info.event.title;
-                let novoStart = info.event.start;
-                let novoEnd = info.event.end;
+                  eventDrop={(info) => {
+                    let eventos = calendarEvents
+                    // console.log(calendarEvents, , )
+                    let tituloParaPesquisar = info.event.title;
+                    let novoStart = info.event.start;
+                    let novoEnd = info.event.end;
 
-                // Filtra os eventos com o título desejado
-                let eventosFiltrados = eventos.filter(function (evento) {
-                  return evento.title === tituloParaPesquisar;
-                });
+                    // Filtra os eventos com o título desejado
+                    let eventosFiltrados = eventos.filter(function (evento) {
+                      return evento.title === tituloParaPesquisar;
+                    });
 
-                // Verifica se foram encontrados eventos com o título especificado
-                if (eventosFiltrados.length > 0) {
-                  // Encontra o evento com o start mais recente
-                  let eventoMaisRecente = eventosFiltrados.reduce(function (prev, current) {
-                    return (new Date(current.start) > new Date(prev.start)) ? current : prev;
-                  });
+                    // Verifica se foram encontrados eventos com o título especificado
+                    if (eventosFiltrados.length > 0) {
+                      // Encontra o evento com o start mais recente
+                      let eventoMaisRecente = eventosFiltrados.reduce(function (prev, current) {
+                        return (new Date(current.start) > new Date(prev.start)) ? current : prev;
+                      });
 
-                  // Atualiza o start e end do evento mais recente com os novos valores
-                  eventoMaisRecente.start = novoStart;
-                  eventoMaisRecente.end = novoEnd;
+                      // Atualiza o start e end do evento mais recente com os novos valores
+                      eventoMaisRecente.start = novoStart;
+                      eventoMaisRecente.end = novoEnd;
 
-                  handleEvents(eventos); // Output para verificar as mudanças
-                }
-              }}
+                      handleEvents(eventos); // Output para verificar as mudanças
+                    }
+                  }}
 
-              eventResize={(info) => {
-                let eventos = calendarEvents
-                // console.log(calendarEvents, , )
-                let tituloParaPesquisar = info.event.title;
-                let novoStart = info.event.start;
-                let novoEnd = info.event.end;
+                  eventResize={(info) => {
+                    let eventos = calendarEvents
+                    // console.log(calendarEvents, , )
+                    let tituloParaPesquisar = info.event.title;
+                    let novoStart = info.event.start;
+                    let novoEnd = info.event.end;
 
-                // Filtra os eventos com o título desejado
-                let eventosFiltrados = eventos.filter(function (evento) {
-                  return evento.title === tituloParaPesquisar;
-                });
+                    // Filtra os eventos com o título desejado
+                    let eventosFiltrados = eventos.filter(function (evento) {
+                      return evento.title === tituloParaPesquisar;
+                    });
 
-                // Verifica se foram encontrados eventos com o título especificado
-                if (eventosFiltrados.length > 0) {
-                  // Encontra o evento com o start mais recente
-                  let eventoMaisRecente = eventosFiltrados.reduce(function (prev, current) {
-                    return (new Date(current.start) > new Date(prev.start)) ? current : prev;
-                  });
+                    // Verifica se foram encontrados eventos com o título especificado
+                    if (eventosFiltrados.length > 0) {
+                      // Encontra o evento com o start mais recente
+                      let eventoMaisRecente = eventosFiltrados.reduce(function (prev, current) {
+                        return (new Date(current.start) > new Date(prev.start)) ? current : prev;
+                      });
 
-                  // Atualiza o start e end do evento mais recente com os novos valores
-                  eventoMaisRecente.start = novoStart;
-                  eventoMaisRecente.end = novoEnd;
+                      // Atualiza o start e end do evento mais recente com os novos valores
+                      eventoMaisRecente.start = novoStart;
+                      eventoMaisRecente.end = novoEnd;
 
-                  handleEvents(eventos); // Output para verificar as mudanças
-                }
-              }}
+                      handleEvents(eventos); // Output para verificar as mudanças
+                    }
+                  }}
 
-              select={(info) => {
-                if (info.view.type === 'dayGridMonth') { return 0 }
-                let answer = window.confirm("create event?")
-                if (answer) {
-                  const payload = { title: ("event id:"+calendarEvents.length), start: info.start, end: info.end, className: "success" }
-                  //dispatchEvents({type: actions.EVENT_ADD, payload})
-                  handleEvents([...calendarEvents, payload])
-                }
+                  select={(info) => {
+                    if (info.view.type === 'dayGridMonth') { return 0 }
+                    let answer = window.confirm("create event?")
+                    if (answer) {
+                      const payload = { title: ("event id:" + calendarEvents.length), start: info.start, end: info.end, className: "success" }
+                      //dispatchEvents({type: actions.EVENT_ADD, payload})
+                      handleEvents([...calendarEvents, payload])
+                    }
 
-              }}
+                  }}
 
-              eventClick={(info) => {
-                if (info.view.type === 'dayGridMonth') { return 0 }
-                let tituloParaExcluir = info.event.title
-                let eventos = calendarEvents.filter(function (evento) {
-                  return evento.title !== tituloParaExcluir;
-                });
-                info.event.remove()
-                handleEvents(eventos)
-              }}
+                  eventClick={(info) => {
+                    if (info.view.type === 'dayGridMonth') { return 0 }
+                    let tituloParaExcluir = info.event.title
+                    let eventos = calendarEvents.filter(function (evento) {
+                      return evento.title !== tituloParaExcluir;
+                    });
+                    info.event.remove()
+                    handleEvents(eventos)
+                  }}
 
 
-              slotMaxTime="21:00:00"
-              headerToolbar={{
-                left: "prev today next",
-                center: "title",
-                right: "timeGridDay timeGridWeek dayGridMonth"
-              }}
-              buttonText={{
-                today: 'Hoje',
-                month: 'Mês',
-                week: 'Semana',
-                day: 'Dia',
-              }}
+                  slotMaxTime="21:00:00"
+                  headerToolbar={{
+                    left: "prev today next",
+                    center: "title",
+                    right: "timeGridDay timeGridWeek dayGridMonth"
+                  }}
+                  buttonText={{
+                    today: 'Hoje',
+                    month: 'Mês',
+                    week: 'Semana',
+                    day: 'Dia',
+                  }}
 
-              events={calendarEvents}
-              selectable
-              editable
-            />
+                  events={calendarEvents}
+                  selectable
+                  editable
+                />
+              ), [rerender]
+            )}
+
           </Grid>
 
           <Grid item xs={12} xl={3}>
             <ArgonBox mb={3}>
-              <NextEvents events={calendarEvents}/>
+              {useMemo(()=>(
+                <NextEvents events={calendarEvents} />
+              ), [rerender])}
+      
             </ArgonBox>
             <ArgonBox mb={3}>
               <ProductivityChart />
