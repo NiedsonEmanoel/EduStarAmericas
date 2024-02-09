@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import React from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -70,7 +70,7 @@ function Calendar() {
       <ArgonBox pt={2}>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
-
+{}
             <EventCalendar
               ref={calendarRef}
               initialView="timeGridWeek"

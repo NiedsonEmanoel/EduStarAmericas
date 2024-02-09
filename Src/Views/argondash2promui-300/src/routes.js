@@ -95,7 +95,15 @@ import Error500 from "layouts/authentication/error/500";
 import ArgonBox from "components/ArgonBox";
 
 const routes = [
-
+  {
+    type: "collapse",
+    name: "Início", // HOME HOME HOME
+    key: "noside",
+    route: "/",
+    component: <Default />,
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Início",
