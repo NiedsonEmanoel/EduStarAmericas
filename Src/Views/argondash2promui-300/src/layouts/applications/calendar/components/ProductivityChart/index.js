@@ -13,100 +13,64 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useState } from "react";
 
-// react-chartjs-2 components
-import { Line } from "react-chartjs-2";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Icon from "@mui/material/Icon";
+import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
+import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
+function ProductivityChart(props) {
 
-// Argon Dashboard 2 PRO MUI components
-import ArgonBox from "components/ArgonBox";
-import ArgonTypography from "components/ArgonTypography";
+  let eventosFiltrados = props.events.filter(function (compromisso) {
+    let dataAtual = new Date();
+    let dataEventoEnd = new Date(compromisso.end);
 
-// Argon Dashboard 2 PRO MUI helper functions
-import gradientChartLine from "assets/theme/functions/gradientChartLine";
+    return dataEventoEnd >= dataAtual;
+  });
 
-// Chart configurations
-import configs from "layouts/applications/calendar/components/ProductivityChart/configs";
+  eventosFiltrados.sort(function (a, b) {
+    return new Date(a.start) - new Date(b.start);
+  });
 
-// Argon Dashboard 2 PRO MUI base styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
+  let dataInicial = new Date(); // Defina a data inicial
+  let dataFinal = new Date(dataInicial); // Crie uma cópia da data inicial
+  dataFinal.setDate(dataFinal.getDate() + 7); // Adicione 7 dias à data final
 
-function ProductivityChart() {
-  const { white } = colors;
-  const { size } = typography;
-  const chartRef = useRef(null);
-  const [openMenu, setOpenMenu] = useState(null);
-  const [chartData, setChartData] = useState({});
-  const { data, options } = chartData;
+  // Inicialize arrays para armazenar as datas (eixo x) e as contagens de eventos (eixo y)
+  let datas = [];
+  let quantidadesEventos = [];
 
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
-  const handleCloseMenu = () => setOpenMenu(null);
+  // Percorra os dias dentro do intervalo
+  for (let d = new Date(dataInicial); d <= dataFinal; d.setDate(d.getDate() + 1)) {
+    let contadorEventos = 0;
 
-  useEffect(() => {
-    const backgroundColor = gradientChartLine(chartRef.current.children[0], white.main, 0.3);
+    // Percorra os eventos filtrados para contar quantos ocorrem em cada dia
+    for (let evento of eventosFiltrados) {
+      let dataEvento = new Date(evento.start);
+      if (dataEvento.toDateString() === d.toDateString()) {
+        contadorEventos++;
+      }
+    }
 
-    setChartData(configs(backgroundColor));
-  }, [configs]);
-
-  const renderMenu = () => (
-    <Menu
-      anchorEl={openMenu}
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={Boolean(openMenu)}
-      onClose={handleCloseMenu}
-      keepMounted
-    >
-      <MenuItem onClick={handleCloseMenu}>Action</MenuItem>
-      <MenuItem onClick={handleCloseMenu}>Anoter action</MenuItem>
-      <MenuItem onClick={handleCloseMenu}>Something else here</MenuItem>
-    </Menu>
-  );
+    // Adicione a data ao array de datas e a contagem de eventos ao array de quantidades
+    datas.push(d.toLocaleDateString('pt-br', { day: '2-digit', month: '2-digit'})); // Ajuste o formato da data conforme necessário
+    quantidadesEventos.push(contadorEventos);
+  }
 
   return (
     <Card>
-      <ArgonBox bgColor="dark" variant="gradient">
-        <ArgonBox p={2}>
-          <ArgonBox display="flex" justifyContent="space-between">
-            <ArgonBox>
-              <ArgonTypography variant="h6" fontWeight="medium" color="white">
-                Productivity
-              </ArgonTypography>
-              <ArgonBox display="flex" alignItems="center">
-                <ArgonBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                  <Icon sx={{ fontWeight: "bold" }}>arrow_upward</Icon>
-                </ArgonBox>
-                <ArgonTypography variant="button" color="white" fontWeight="medium">
-                  4% more{" "}
-                  <ArgonTypography variant="button" color="white" fontWeight="regular">
-                    in 2021
-                  </ArgonTypography>
-                </ArgonTypography>
-              </ArgonBox>
-            </ArgonBox>
-            <ArgonTypography color="white" onClick={handleOpenMenu}>
-              <Icon fontSize="default" sx={{ cursor: "pointer" }}>
-                more_horiz
-              </Icon>
-            </ArgonTypography>
-            {renderMenu()}
-          </ArgonBox>
-        </ArgonBox>
-        {useMemo(
-          () => (
-            <ArgonBox ref={chartRef} sx={{ height: "6.25rem" }}>
-              <Line data={data} options={options} />
-            </ArgonBox>
-          ),
-          [chartData]
-        )}
-      </ArgonBox>
+      <HorizontalBarChart chart={{
+        labels: datas,
+        datasets: [
+          {
+            label: "Compromissos",
+            color: "dark",
+            data: quantidadesEventos,
+          },
+        ],
+      }} />
+
     </Card>
   );
 }

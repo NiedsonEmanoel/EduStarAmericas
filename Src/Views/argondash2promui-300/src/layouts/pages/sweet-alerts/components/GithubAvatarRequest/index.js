@@ -28,13 +28,14 @@ function GithubAvatarRequest() {
         cancelButton: "button button-error",
       },
     });
-    newSwal
-      .fire({
+
+    newSwal.fire({
         title: "Submit your Github username",
         input: "text",
         inputAttributes: {
           autocapitalize: "off",
         },
+        
         showCancelButton: true,
         confirmButtonText: "Look up",
         showLoaderOnConfirm: true,

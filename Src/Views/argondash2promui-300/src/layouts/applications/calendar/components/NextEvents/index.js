@@ -20,7 +20,6 @@ import Card from "@mui/material/Card";
 // Argon Dashboard 2 PRO MUI components
 import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
-
 // Argon Dashboard 2 PRO MUI example components
 import DefaultItem from "examples/Items/DefaultItem";
 
@@ -28,24 +27,30 @@ import DefaultItem from "examples/Items/DefaultItem";
 function renderEvents(events) {
 
 
-  let filtraUtil = events.filter(function (evento) {
-    return evento.className !== 'dark'
+  let filtraUtil = events.filter(function (compromisso) {
+    return compromisso.className !== 'dark'
   })
 
-  let eventosFiltrados = filtraUtil.filter(function (evento) {
+  let compromissosFiltrados = filtraUtil.filter(function (compromisso) {
     let dataAtual = new Date();
-    let dataEventoEnd = new Date(evento.end);
+    let dataEventoEnd = new Date(compromisso.end);
 
     return dataEventoEnd >= dataAtual;
   });
 
-  let eventosRecentes = eventosFiltrados.slice(0, 9);
+  compromissosFiltrados.sort(function(a, b) {
+    return new Date(a.start) - new Date(b.start);
+  });
+
+
+  let compromissosRecentes = compromissosFiltrados.slice(0, 6);
+
 
   return (
 
     <>
-      {eventosRecentes.length !== 0 ?
-        eventosRecentes.map((event) => {
+      {compromissosRecentes.length !== 0 ?
+        compromissosRecentes.map((event) => {
           let stre = new Date(event.start)
           let acre = new Date(event.end)
 
@@ -76,8 +81,8 @@ function renderEvents(events) {
             <DefaultItem
               color={'primary'}
               icon={<i className="ni ni-planet" />}
-              title={'Sem eventos'}
-              description={'Não há eventos de estudo cadastrados. Clique no calendário e crie o primero.'}
+              title={'Sem eventos de estudo '}
+              description={'Não há compromissos de estudo cadastrados. Clique no calendário e crie o primero. OBS: Eventos da cor preta são compromissos pessoais, portanto não aparecem aqui na guia de estudos. '}
             />
           </ArgonBox>
           <Divider />
@@ -91,7 +96,7 @@ function NextEvents(props) {
     <Card sx={{ height: "100%" }}>
       <ArgonBox pt={2} px={2}>
         <ArgonTypography variant="h6" fontWeight="medium">
-          Próximos eventos
+          Compromissos de estudo
         </ArgonTypography>
       </ArgonBox>
       <Divider />
