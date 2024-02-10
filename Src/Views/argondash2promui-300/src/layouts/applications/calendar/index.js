@@ -284,7 +284,7 @@ function Calendar() {
             <ArgonBox mb={3}>
               {useMemo(() => (
                 <ProductivityChart events={calendarEvents} />
-              ), [calendarEvents])}
+              ), [rerender])}
             </ArgonBox>
           </Grid>
         </Grid>

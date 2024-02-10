@@ -7,27 +7,23 @@ import { NavLink } from "react-router-dom";
 import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
 import ArgonButton from "components/ArgonButton";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Headerer from "./components/Headerer";
 import Card from "@mui/material/Card";
-import Table from "examples/Tables/Table";
-import projectsTableData from "layouts/dashboards/default/data/projectsTableData";
-// Argon Dashboard 2 PRO MUI example components
+
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
 import DetailedStatisticsCard from "examples/Cards/StatisticsCards/DetailedStatisticsCard";
 import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnutChart";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
 import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import RadarChart from "examples/Charts/RadarChart";
-import typography from "assets/theme/base/typography";
+
 
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import { Divider } from "@mui/material";
 
 function Default() {
 
-  const { size } = typography;
   const [nameMat, setnameMat] = useState('Linguagens')
   const [colorGraph, setcolorGraph] = useState('info')
   const [xGraph_DESEM, setXGraph_DESEM] = useState(["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
@@ -172,43 +168,47 @@ function Default() {
         </Grid>
         <Divider />
         <Grid container spacing={3} mb={3}>
+          {useMemo(() => (
+            <>
+              <Grid item xs={12} lg={7}>
+                <DefaultLineChart
+                  title="VISÃO GERAL"
+                  description={
+                    <ArgonBox >
+                      <ArgonTypography variant="button" color="text" fontWeight="medium">
+                        Evolução na média TRI
+                      </ArgonTypography>
+                    </ArgonBox>
+                  }
+                  chart={{
+                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], //X
+                    datasets: [
+                      {
+                        label: "Média Simples",
+                        color: "primary",
+                        data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
+                      },
+                    ],
+                  }}
+                />
+              </Grid>
 
-          <Grid item xs={12} lg={7}>
-            <DefaultLineChart
-              title="VISÃO GERAL"
-              description={
-                <ArgonBox >
-                  <ArgonTypography variant="button" color="text" fontWeight="medium">
-                    Evolução na média TRI
-                  </ArgonTypography>
-                </ArgonBox>
-              }
-              chart={{
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], //X
-                datasets: [
-                  {
-                    label: "Média Simples",
-                    color: "primary",
-                    data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
-                  },
-                ],
-              }}
-            />
-          </Grid>
 
+              <Grid item xs={12} lg={5}>
+                <VerticalBarChart title="Questões certas" chart={{
+                  labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                  datasets: [
+                    {
+                      label: "Questões certas",
+                      color: "primary",
+                      data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
+                    },
+                  ],
+                }} />
+              </Grid>
+            </>
+          ), [xGraph_DESEM])}
 
-          <Grid item xs={12} lg={5}>
-            <VerticalBarChart title="Questões certas" chart={{
-              labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-              datasets: [
-                {
-                  label: "Questões certas",
-                  color: "primary",
-                  data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
-                },
-              ],
-            }} />
-          </Grid>
 
         </Grid>
         <Divider />
@@ -249,47 +249,49 @@ function Default() {
         </Grid>
 
         <Grid container spacing={3} mb={3}>
+          {useMemo(() => (
+            <>
+              <Grid item xs={12} lg={4}>
+                <DefaultLineChart
+                  title={"Evolução TRI: " + nameMat}
+                  chart={{
+                    labels: xGraph_DESEM, //X
+                    datasets: [
+                      {
+                        label: "Nota TRI",
+                        color: colorGraph,
+                        data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
+                      },
+                    ],
+                  }}
+                />
+              </Grid>
 
-          <Grid item xs={12} lg={4}>
-            <DefaultLineChart
-              title={"Evolução TRI: " + nameMat}
-              chart={{
-                labels: xGraph_DESEM, //X
-                datasets: [
-                  {
-                    label: "Nota TRI",
-                    color: colorGraph,
-                    data: [650.3, 685, 690, 695, 671, 665, 704, 695, 752], // Y
+              <Grid item xs={12} lg={4}>
+                <VerticalBarChart title={"Acertos em " + nameMat} chart={{
+                  labels: xGraph_DESEM,
+                  datasets: [
+                    {
+                      label: "Acertos",
+                      color: colorGraph,
+                      data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
+                    },
+                  ],
+                }} />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <DefaultDoughnutChart title={"Erros por Habilidades: " + nameMat} chart={{
+                  labels: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20', 'H21', 'H22', 'H23', 'H24', 'H25', 'H26', 'H27', 'H28', 'H29', 'H30', 'SEM_HAB_DEFINIDA',],
+                  datasets: {
+                    backgroundColors: ["info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "primary"],
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                    ,
                   },
-                ],
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} lg={4}>
-            <VerticalBarChart title={"Acertos em " + nameMat} chart={{
-              labels: xGraph_DESEM,
-              datasets: [
-                {
-                  label: "Acertos",
-                  color: colorGraph,
-                  data: [25, 33, 35, 38, 35, 31, 44, 39, 43],
-                },
-              ],
-            }} />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <DefaultDoughnutChart title={"Erros por Habilidades: " + nameMat} chart={{
-              labels: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20', 'H21', 'H22', 'H23', 'H24', 'H25', 'H26', 'H27', 'H28', 'H29', 'H30', 'SEM_HAB_DEFINIDA',],
-              datasets: {
-                backgroundColors: ["info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "secondary", "primary", 'warning', 'error', 'success', "info", "dark", "primary"],
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-                ,
-              },
-            }} />
-          </Grid>
-
+                }} />
+              </Grid>
+            </>
+          ), [nameMat])}
 
         </Grid>
 
