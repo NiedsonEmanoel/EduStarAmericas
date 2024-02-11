@@ -90,7 +90,7 @@ import VerificationCover from "layouts/authentication/2-step-verification/cover"
 import VerificationIllustration from "layouts/authentication/2-step-verification/illustration";
 import Error404 from "layouts/authentication/error/404";
 import Error500 from "layouts/authentication/error/500";
-
+import LandingPage from "layouts/home_landing/LandingPage";
 // Argon Dashboard 2 PRO MUI components
 import ArgonBox from "components/ArgonBox";
 
@@ -100,7 +100,7 @@ const routes = [
     name: "Início", // HOME HOME HOME
     key: "noside",
     route: "/",
-    component: <Default />,
+    component: <LandingPage />,
     icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
     noCollapse: true,
   },
