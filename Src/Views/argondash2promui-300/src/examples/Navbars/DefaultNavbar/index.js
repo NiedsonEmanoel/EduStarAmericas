@@ -45,8 +45,9 @@ import breakpoints from "assets/theme/base/breakpoints";
 
 // Material Dashboard 2 PRO React context
 import { useArgonController } from "context";
+import brand from "assets/images/logo-ct.png";
 
-function DefaultNavbar({ routes, brand, transparent, light, action }) {
+function DefaultNavbar({ routes, transparent, light, action }) {
   const [controller] = useArgonController();
   const { darkMode } = controller;
 
@@ -551,8 +552,9 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
             pl={{ xs: 0, lg: 1 }}
           >
             <ArgonTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-              {brand}
+              <ArgonBox component="img" src={brand} alt="Enemaster.app" width="2.9rem" />
             </ArgonTypography>
+
           </ArgonBox>
           <ArgonBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
             {renderNavbarItems}

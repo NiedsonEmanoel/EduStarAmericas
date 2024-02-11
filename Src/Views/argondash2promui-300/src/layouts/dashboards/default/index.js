@@ -28,7 +28,7 @@ function Default() {
   const [colorGraph, setcolorGraph] = useState('info')
   const [xGraph_DESEM, setXGraph_DESEM] = useState(["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
   const bgImage =
-    "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg";
+  "https://raw.githubusercontent.com/NiedsonEmanoel/CDN_ENEMASTER/main/Images/asas.jpg";
 
 
   const toogleDesemLC = () => {

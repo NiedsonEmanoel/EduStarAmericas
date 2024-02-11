@@ -31,7 +31,7 @@ import ArgonInput from "components/ArgonInput";
 import { Typography } from "@mui/material";
 
 const bgImage =
-  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg";
+  "https://raw.githubusercontent.com/NiedsonEmanoel/CDN_ENEMASTER/main/Images/asas.jpg";
 
 
 

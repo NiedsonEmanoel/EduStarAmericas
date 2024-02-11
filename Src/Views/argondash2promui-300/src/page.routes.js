@@ -409,4 +409,4 @@ const pageRoutes = [
   },
 ];
 
-export default pageRoutes;
+export default [pageRoutes];

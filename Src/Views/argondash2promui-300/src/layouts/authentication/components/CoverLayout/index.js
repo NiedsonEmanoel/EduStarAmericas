@@ -42,8 +42,7 @@ function CoverLayout({ title, description, image, imgPosition, button, children 
           action={{
             type: "external",
             route: "https://creative-tim.com/product/argon-dashboard-pro-material-ui",
-            label: "Buy Now",
-            ...button,
+            label: "Suporte",
           }}
           transparent
           light

@@ -38,7 +38,7 @@ function IllustrationLayout({ color, header, title, description, button, illustr
         action={{
           type: "external",
           route: "https://creative-tim.com/product/argon-dashboard-pro-react",
-          label: "Buy Now",
+          label: "Login",
           ...button,
         }}
       />
