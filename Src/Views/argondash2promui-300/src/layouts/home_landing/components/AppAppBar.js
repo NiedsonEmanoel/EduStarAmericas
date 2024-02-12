@@ -147,7 +147,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                 variant="text"
                 size="small"
                 component="a"
-                href="/material-ui/getting-started/templates/sign-in/"
+                href="/auth/create"
                 target="_blank"
               >
                 Criar conta
@@ -157,7 +157,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                 variant="contained"
                 size="small"
                 component="a"
-                href="/authentication/sign-in/cover"
+                href="/auth/login"
               >
                 Já sou aluno
               </Button>

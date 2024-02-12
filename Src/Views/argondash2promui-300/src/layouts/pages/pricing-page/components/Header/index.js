@@ -46,21 +46,21 @@ function Header({ tabValue, tabHandler }) {
     <>
       <DefaultNavbar
         routes={pageRoutes}
+        transparent
+        light
         action={{
           type: "external",
           route: "https://creative-tim.com/product/argon-dashboard-pro-react",
-          label: "Buy Now",
+          label: "Bolsa de Estudos",
           color: "white",
         }}
-        transparent
-        light
       />
       <ArgonBox
         position="relative"
         height="50vh"
         overflow="hidden"
         pt={12}
-        pb={20}
+        pb={45}
         sx={({ palette: { gradients }, functions: { linearGradient, rgba } }) => ({
           backgroundImage: `${linearGradient(
             rgba(gradients.info.main, 0.5),
@@ -75,16 +75,16 @@ function Header({ tabValue, tabHandler }) {
           <Grid item xs={10} lg={5}>
             <ArgonBox mt={3} mb={1}>
               <ArgonTypography variant="h3" color="white" fontWeight="bold">
-                See our pricing
+                Confira nossos planos
               </ArgonTypography>
             </ArgonBox>
             <ArgonBox mb={2}>
               <ArgonTypography variant="body2" color="white" fontWeight="regular">
-                You have Free Unlimited Updates and Premium Support on each package.
+                Procuramos atender todos os tipos de alunos, veja no qual você se encaixa e bons estudos!
               </ArgonTypography>
             </ArgonBox>
             <Grid container item xs={12} sm={10} md={8} lg={7} sx={{ mx: "auto" }}>
-              <ArgonBox width="100%" mt={6}>
+              <ArgonBox width="100%" mt={6} >
                 <AppBar position="static">
                   <Tabs value={tabValue} onChange={tabHandler}>
                     <Tab

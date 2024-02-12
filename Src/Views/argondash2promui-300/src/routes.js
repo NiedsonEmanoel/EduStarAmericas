@@ -106,6 +106,49 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Início", 
+    key: "noside",
+    route: "/auth/login",
+    component: <SignInBasic />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Início", 
+    key: "noside",
+    route: "/auth/create",
+    component: <PricingPage />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Início", 
+    key: "noside",
+    route: "/auth/recovery",
+    component: <ResetBasic />,
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Início", 
+    key: "noside",
+    route: "/auth/recovery/change/:token",
+    component: <LockBasic />,
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Início", 
+    key: "noside",
+    route: "/auth/create/free",
+    component: <SignUpBasic/>,
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-shop" />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
     name: "Início",
     key: "home",
     route: "/home",
@@ -394,22 +437,20 @@ const routes = [
       },
     ],
   },
+
+
+
+  //LEMBRAR DE REMOVER - MANTER APENAS PARA DEV
   {
     type: "collapse",
     name: "Authentication",
-    key: "authentication",
+    key: "noside",
     icon: <ArgonBox component="i" color="error" fontSize="14px" className="ni ni-single-copy-04" />,
     collapse: [
       {
         name: "Sign In",
         key: "sign-in",
         collapse: [
-          {
-            name: "Basic",
-            key: "basic",
-            route: "/authentication/sign-in/basic",
-            component: <SignInBasic />,
-          },
           {
             name: "Cover",
             key: "cover",
@@ -429,16 +470,16 @@ const routes = [
         key: "sign-up",
         collapse: [
           {
-            name: "Basic",
-            key: "basic",
-            route: "/authentication/sign-up/basic",
-            component: <SignUpBasic />,
-          },
-          {
             name: "Cover",
             key: "cover",
             route: "/authentication/sign-up/cover",
             component: <SignUpCover />,
+          },
+          {
+            name: "Cover",
+            key: "cover",
+            route: "/auth/create/free",
+            component: <SignUpBasic/>,
           },
           {
             name: "Illustration",
@@ -452,12 +493,7 @@ const routes = [
         name: "Reset Password",
         key: "reset-password",
         collapse: [
-          {
-            name: "Basic",
-            key: "basic",
-            route: "/authentication/reset-password/basic",
-            component: <ResetBasic />,
-          },
+
           {
             name: "Cover",
             key: "cover",
@@ -476,12 +512,6 @@ const routes = [
         name: "Lock",
         key: "lock",
         collapse: [
-          {
-            name: "Basic",
-            key: "basic",
-            route: "/authentication/lock/basic",
-            component: <LockBasic />,
-          },
           {
             name: "Cover",
             key: "cover",
@@ -540,6 +570,9 @@ const routes = [
       },
     ],
   },
+
+
+
   { type: "divider", key: "divider-1" },
   { type: "title", title: "APPs", key: "title-docs" },
   

@@ -240,7 +240,7 @@ def questHab(dfResult_CN, flashname, flashstr):
                 # ajustar as coordenadas de posição e o tamanho da imagem
                 pdf.image(img_path, x=pdf.w / 2 - width / 2, y=y, w=width, h=height)
                 pdf.image(img_pathax, x=3, y=-3,  h=25) #w=45,
-                pdf.image('../../../Public/Img/buabuabuaerreibua.png', x=pdf.w / 2 - 50 / 2, y=(height+y+15), w=50, h=18)
+                pdf.image('coor.png', x=pdf.w / 2 - 50 / 2, y=(height+y+15), w=50, h=18)
                 pdf.ln(10)
 
                 link = toYoutube(remover_caracteres_invalidos(dfResult_CN.loc[i, "OCRSearch"]))

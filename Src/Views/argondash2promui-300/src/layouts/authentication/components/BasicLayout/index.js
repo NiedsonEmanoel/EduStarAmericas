@@ -28,7 +28,7 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
-import Footer from "layouts/authentication/components/Footer";
+import lib from '../../../../assets/images/lib.jpg'
 
 // Argon Dashboard 2 PRO MUI page layout routes
 import pageRoutes from "page.routes";
@@ -37,6 +37,7 @@ function BasicLayout({ button, image, children }) {
   return (
     <PageLayout>
       <DefaultNavbar
+      transparent
         routes={pageRoutes}
         action={{
           type: "external",
@@ -57,8 +58,9 @@ function BasicLayout({ button, image, children }) {
             `${linearGradient(
               rgba(gradients.dark.main, 0.6),
               rgba(gradients.dark.state, 0.6)
-            )}, url(${image})`,
+            )}, url(${lib})`,
           backgroundSize: "cover",
+          opacity: .95,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
@@ -71,7 +73,7 @@ function BasicLayout({ button, image, children }) {
           </Grid>
         </ArgonBox>
       </ArgonBox>
-      <Footer />
+  
     </PageLayout>
   );
 }

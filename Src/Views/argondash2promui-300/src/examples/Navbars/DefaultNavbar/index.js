@@ -61,7 +61,7 @@ function DefaultNavbar({ routes, transparent, light, action }) {
   const [mobileNavbar, setMobileNavbar] = useState(false);
   const [mobileView, setMobileView] = useState(false);
 
-  const openMobileNavbar = () => setMobileNavbar(!mobileNavbar);
+  const openMobileNavbar = () => setMobileNavbar(false);
 
   useEffect(() => {
     // A function that sets the display state for the DefaultNavbarMobile.
@@ -551,8 +551,8 @@ function DefaultNavbar({ routes, transparent, light, action }) {
             lineHeight={1}
             pl={{ xs: 0, lg: 1 }}
           >
-            <ArgonTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-              <ArgonBox component="img" src={brand} alt="Enemaster.app" width="2.9rem" />
+            <ArgonTypography variant="button" textAlign="center" fontWeight="bold" color={light ? "white" : "dark"}>
+              <ArgonBox component="img" src={brand}  alt="Enemaster.app" width="3.5rem" />
             </ArgonTypography>
 
           </ArgonBox>
@@ -580,7 +580,7 @@ function DefaultNavbar({ routes, transparent, light, action }) {
                   target="_blank"
                   rel="noreferrer"
                   variant={action.variant ? action.variant : "contained"}
-                  color={action.color ? action.color : "info"}
+                  color={action.color ? action.color : "primary"}
                   size="small"
                   sx={{ mt: -0.3 }}
                 >
@@ -588,17 +588,6 @@ function DefaultNavbar({ routes, transparent, light, action }) {
                 </ArgonButton>
               </ArgonBox>
             ))}
-          <ArgonBox
-            display={{ xs: "inline-block", lg: "none" }}
-            lineHeight={0}
-            py={1.5}
-            pl={1.5}
-            color={transparent || darkMode ? "white" : "inherit"}
-            sx={{ cursor: "pointer" }}
-            onClick={openMobileNavbar}
-          >
-            <Icon fontSize="default">{mobileNavbar ? "close" : "menu"}</Icon>
-          </ArgonBox>
         </ArgonBox>
         <ArgonBox
           shadow={transparent ? "lg" : "none"}

@@ -29,16 +29,18 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Argon Dashboard 2 PRO MUI page layout routes
 import pageRoutes from "page.routes";
+import lib from '../../../../assets/images/lib.jpg'
 
 function IllustrationLayout({ color, header, title, description, button, illustration, children }) {
   return (
     <PageLayout background="white">
       <DefaultNavbar
+      transparent
         routes={pageRoutes}
         action={{
           type: "external",
           route: "https://creative-tim.com/product/argon-dashboard-pro-react",
-          label: "Login",
+          label: "Suporte",
           ...button,
         }}
       />
@@ -81,22 +83,23 @@ function IllustrationLayout({ color, header, title, description, button, illustr
           >
             <ArgonBox
               component="img"
-              src={illustration.image}
+              src={lib}
               alt="background"
-              width="100%"
+              width="200%"
               position="absolute"
               top={0}
               left={0}
+              opacity={0.8}
             />
             <ArgonBox
-              bgColor={color}
+              bgColor={'primary'}
               variant="gradient"
               width="100%"
               height="100%"
               position="absolute"
               topl={0}
               left={0}
-              opacity={0.7}
+              opacity={0}
             />
             <ArgonBox position="relative">
               {illustration.title && (

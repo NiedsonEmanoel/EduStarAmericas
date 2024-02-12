@@ -1,0 +1,9 @@
+fastapi
+pandas
+numpy
+fpdf
+uvicorn
+barcode
+genanki
+pillow
+wordcloud
