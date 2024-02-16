@@ -4,14 +4,7 @@
   "author": "Creative Tim",
   "license": "SEE LICENSE IN <https://www.creative-tim.com/license>",
   "description": "React version of Argon Dashboard 2 PRO by Creative Tim",
-  "homepage": "https://demos.creative-tim.com/argon-dashboard-pro-material-ui/#/dashboards/default",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/ct-argon-dashboard-pro-material-ui/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/ct-argon-dashboard-pro-material-ui.git"
-  },
+  "homepage": "https://enemaster.app.br/",
   "dependencies": {
     "@asseinfo/react-kanban": "2.2.0",
     "@emotion/cache": "11.7.1",

@@ -7,3 +7,4 @@ barcode
 genanki
 pillow
 wordcloud
+pydantic

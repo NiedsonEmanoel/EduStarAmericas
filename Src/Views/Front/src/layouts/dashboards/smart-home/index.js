@@ -112,7 +112,8 @@ function SmartHome() {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <DefaultCounterCard
-                    count={417}
+                    count={500}
+                    color='primary'
                     suffix="GB"
                     title="internet"
                     description="all devices"

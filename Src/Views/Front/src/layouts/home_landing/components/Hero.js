@@ -9,6 +9,53 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import faceWhite from '../../../assets/images/faceWhite.png'
 import faceBlack from '../../../assets/images/faceBlack.png'
+import Grid from "@mui/material/Grid";
+import CountUp from "react-countup";
+
+// prop-types is a library for typechecking of props
+
+// @mui material components
+import Card from "@mui/material/Card";
+
+
+function DefaultCounterCard({ color, count, title, description, prefix, suffix }) {
+  return (
+    <Card>
+      <Box p={1} textAlign="center" lineHeight={1.25}>
+        <Typography variant="h1" color={color} fontWeight="bold" textGradient>
+          {prefix && (
+            <Typography color={color} component="span" variant="h6" fontWeight="bold">
+              {prefix}
+            </Typography>
+          )}
+          <Box display="inline-block" mx={0.5}>
+            <CountUp end={count} duration={1} separator="." />
+          </Box>
+          {suffix && (
+            <Typography color={color} component="span" variant="h3" fontWeight="bold">
+              {suffix}
+            </Typography>
+          )}
+        </Typography>
+        <Typography variant="h5" fontWeight="bold">
+          {title}
+        </Typography >
+        {description && (
+          <Typography
+            variant="caption"
+            fontWeight="regular"
+            opacity={0.7}
+
+          >
+            {description}
+          </Typography>
+        )}
+      </Box>
+    </Card>
+  );
+}
+
+
 
 export default function Hero() {
   return (
@@ -42,7 +89,7 @@ export default function Hero() {
               flexDirection: { xs: 'column', md: 'row' },
               alignSelf: 'center',
               textAlign: 'center',
-              color: theme.palette.mode === 'light' ? '#000':'#FFF'
+              color: theme.palette.mode === 'light' ? '#000' : '#FFF'
             })}
           >
             Melhore seus estudos com a&nbsp;
@@ -58,37 +105,43 @@ export default function Hero() {
             </Typography>
           </Typography>
           <Typography variant="body1" textAlign="center" color="text.secondary">
-          Nosso algoritmo identifica as questões e assuntos cruciais para seu estudo. Evite perder tempo revisando áreas já dominadas ou menos relevantes. Concentre-se no que realmente melhorará sua nota TRI.            </Typography>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            alignSelf="center"
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
-          >
-            <TextField
-              id="outlined-basic"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              inputProps={{
-                autocomplete: 'off',
-                ariaLabel: 'Enter your email address',
-              }}
-            />
-            <Button variant="contained" color="primary">
-              Start now
-            </Button>
-          </Stack>
-          <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
-            </Link>
-            .
-          </Typography>
+            Nosso algoritmo identifica as questões e assuntos cruciais para seu estudo. Evite perder tempo revisando áreas já dominadas ou menos relevantes. Concentre-se no que realmente melhorará sua nota TRI.            </Typography>
+          <Grid item xs={12} pt={4}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={4}>
+
+                <DefaultCounterCard
+                  count={5046}
+                  suffix={'+'}
+                  color={'primary'}
+                  title="Questões"
+                  description="Edições do ENEM de 2014 a 2022"
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+
+                <DefaultCounterCard
+                  count={48}
+                  color={'primary'}
+                  title="Simulados TRI/mês"
+                  description="*no plano básico"
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+
+                <DefaultCounterCard
+                  count={12}
+                  color={'primary'}
+                  title="Relatórios TRI/mês"
+                  description="Questões que melhoram a sua nota"
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+
         </Stack>
         <Box
           id="image"
