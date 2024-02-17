@@ -1,11 +1,9 @@
 pandas
-pycaret
 numpy
 wordcloud
 cv2
 os
 requests
-pycaret
 scipy
 fpdf
 Pillow
@@ -13,3 +11,9 @@ genanki
 matplotlib
 barcode
 pymongo
+fastapi
+pydantic
+uvicorn
+bson
+pydantic[email]
+pyjwt

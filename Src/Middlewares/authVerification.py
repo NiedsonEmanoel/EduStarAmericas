@@ -1,33 +1,43 @@
-from fastapi import Request, status
+from fastapi import Request, status, Header
 from fastapi.responses import JSONResponse
 from fastapi.responses import RedirectResponse
-frontProtected = [
+
+frontProtected: list[str] = [ #PRECISA DE LOGIN FRONT
    '/home'
 ]
 
 
-protectedLoginPaths = [
+protectedLoginPaths: list[str] = [ #PRECISA DE LOGIN API
     '/api/health'
 ]
 
 
-confidentialAuthPaths = [
+confidentialAuthPaths: list[str] = [ #APENAS ADM API
     '/api/docs',
-    "/items/"
+    "/items/", #/items/{item_id}
 ]
 
-frontConfidential = [
-    
+frontConfidential: list[str] = [ #APENAS ADM (/ADMIN/QUALQUERCOISA) FRONT
+    '/admin/'
 ]
+
 
 protectedLoginPaths.extend(frontProtected)
-confidentialAuthPaths.extend(frontConfidential)
-protectedLoginPaths.extend(confidentialAuthPaths)
 
+confidentialAuthPaths.extend(frontConfidential)
+
+protectedLoginPaths.extend(confidentialAuthPaths)
 
 async def verifyLogin(request: Request, call_next): ###SITUAÇÃO NORMAL DE LOGIN E AUTORIZAÇÃO DE ROTA, VERIFICA APENAS O TOKEN JWT (48h)
     path = str(request.url.path).lower()
-    print(path)
+ 
+    try:
+        token = request.headers['Authorization']
+    except:
+        token = request.cookies.get('Authorization')
+        l=1
+
+
     # Verifique se o caminho da URL está na lista de rotas protegidas
     if any(path.startswith(p) for p in protectedLoginPaths):
         if 1 == 1:  # Simulação de login
@@ -40,7 +50,8 @@ async def verifyLogin(request: Request, call_next): ###SITUAÇÃO NORMAL DE LOGI
             else:
                 return JSONResponse( ##API
                     status_code=status.HTTP_401_UNAUTHORIZED,
-                    content={"message": "Não autorizado."}
+                    content={"message": "Não autorizado."},
+                    
                 )
     else:
         response = await call_next(request)
@@ -49,14 +60,19 @@ async def verifyLogin(request: Request, call_next): ###SITUAÇÃO NORMAL DE LOGI
 async def verifyAuth(request: Request, call_next): ## ROTAS ADMINISTRATIVAS DE CONFIDENCIALIDADE: EMITIR JWT DE ADMINISTRADOR (1H)
     path = str(request.url.path).lower()
     if any(path.startswith(p) for p in confidentialAuthPaths):
-        if 1 == 1:  # Simulação de autorização
+        if 1 == 1:  # Simulação de autorização #CRIAÇÃO JWT DE 1H PARA ROTINAS ADMINISTRATIVAS
             response = await call_next(request)
             return response
         else:
-            return JSONResponse( 
-                status_code=status.HTTP_403_FORBIDDEN,
-                content={"message": "Sem autorização para acessar esse conteúdo."}
-            )
+            #DESTRUIR DADOS DE ACESSO 
+
+            if any(path.startswith(p) for p in frontConfidential): ##PROTEÇÃO DE FRONT
+                return RedirectResponse(f"{request.base_url}auth/login") 
+            else:
+                return JSONResponse( 
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    content={"message": "Sem autorização para acessar esse conteúdo."}
+                )
     else:
         response = await call_next(request)
         return response
@@ -64,7 +80,7 @@ async def verifyAuth(request: Request, call_next): ## ROTAS ADMINISTRATIVAS DE C
 async def toHomeIfLogged(request: Request, call_next): #VE O JWT/COOKIE E DECIDE SE PASSA PARA LANDING PAGE OU PARA HOME 
     path = str(request.url.path).lower()
     if path == '/':
-        if 1 == 1:  # Simulação de autorização
+        if 1 == 2:  # Simulação de autorização
             return RedirectResponse(f"{request.base_url}home")
         else:
             response = await call_next(request)
