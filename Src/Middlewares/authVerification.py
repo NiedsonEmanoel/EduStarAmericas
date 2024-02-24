@@ -1,6 +1,7 @@
 from fastapi import Request, status, Header
 from fastapi.responses import JSONResponse
 from fastapi.responses import RedirectResponse
+from Functions import jwt
 
 frontProtected: list[str] = [ #PRECISA DE LOGIN FRONT
    '/home'
@@ -30,18 +31,21 @@ protectedLoginPaths.extend(confidentialAuthPaths)
 
 async def verifyLogin(request: Request, call_next): ###SITUAÇÃO NORMAL DE LOGIN E AUTORIZAÇÃO DE ROTA, VERIFICA APENAS O TOKEN JWT (48h)
     path = str(request.url.path).lower()
- 
-    try:
-        token = request.headers['Authorization']
-    except:
-        token = request.cookies.get('Authorization')
-        l=1
-
-
     # Verifique se o caminho da URL está na lista de rotas protegidas
     if any(path.startswith(p) for p in protectedLoginPaths):
-        if 1 == 1:  # Simulação de login
-            print(path)
+        proceed = False
+        product = {}
+        try:
+            token = request.headers['Authorization']
+        except:
+            token = request.cookies.get('Authorization')
+        if (token != None):
+            product = jwt.decodeLogin(token)
+            proceed = product['pass']
+        else:
+            proceed = False
+
+        if proceed == True: 
             response = await call_next(request)
             return response
         else:
@@ -57,7 +61,7 @@ async def verifyLogin(request: Request, call_next): ###SITUAÇÃO NORMAL DE LOGI
         response = await call_next(request)
         return response
     
-async def verifyAuth(request: Request, call_next): ## ROTAS ADMINISTRATIVAS DE CONFIDENCIALIDADE: EMITIR JWT DE ADMINISTRADOR (1H)
+async def verifyAuth(request: Request, call_next): ## ROTAS ADMINISTRATIVAS DE CONFIDENCIALIDADE: EMITIR JWT DE ADMINISTRADOR (2H)
     path = str(request.url.path).lower()
     if any(path.startswith(p) for p in confidentialAuthPaths):
         if 1 == 1:  # Simulação de autorização #CRIAÇÃO JWT DE 1H PARA ROTINAS ADMINISTRATIVAS

@@ -18,7 +18,8 @@ app = FastAPI(
     summary='Nosso algoritmo identifica as questões e assuntos cruciais para seu estudo. Evite perder tempo revisando áreas já dominadas ou menos relevantes. Concentre-se no que realmente melhorará sua nota TRI.',
     docs_url='/api/docs',
     redoc_url=None,
-    openapi_tags=tags.tags_metadata
+    openapi_tags=tags.tags_metadata,
+    swagger_ui_parameters={"defaultModelsExpandDepth": -1}
 )
 
 app.add_middleware(

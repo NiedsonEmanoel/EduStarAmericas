@@ -1,7 +1,12 @@
 tags_metadata = [
+
+    {
+        "name": "Users",
+        "description": "Operações com os usuários.",
+    },
     {
         "name": "API",
-        "description": "Operações dentro da API **lógica da TRI e Login aqui**",
+        "description": "Todas as operações da API",
     },
     {
         "name": "Front",

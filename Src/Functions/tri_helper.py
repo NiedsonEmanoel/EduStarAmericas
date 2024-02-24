@@ -28,6 +28,7 @@ def link_tri_api_parser(a: list[float], b: list[float], c: list[float], re: list
         return serialized_url
     except Exception as inst:
         print(inst)
+        return 'error'
 
 @validate_call
 def tri_caller_api_R(a: list[float], b: list[float], c: list[float], re: list[int]) -> dict[str, int | dict]:

@@ -17,3 +17,6 @@ uvicorn
 bson
 pydantic[email]
 pyjwt
+fsrs
+bcrypt
+motor
