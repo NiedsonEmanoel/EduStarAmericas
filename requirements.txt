@@ -1,8 +1,6 @@
 pandas
 numpy
 wordcloud
-cv2
-os
 requests
 scipy
 fpdf
