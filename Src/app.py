@@ -5,8 +5,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 
-from bson import ObjectId
-
 from fastapi.middleware.cors import CORSMiddleware
 from Middlewares import authVerification
 
