@@ -28,9 +28,9 @@ app.add_middleware(
 )
 
 
-app.middleware('http')(authVerification.verifyLogin)
-app.middleware('http')(authVerification.verifyAuth)
-app.middleware('http')(authVerification.toHomeIfLogged)
+#app.middleware('http')(authVerification.verifyLogin)
+#app.middleware('http')(authVerification.verifyAuth)
+#app.middleware('http')(authVerification.toHomeIfLogged)
 
 app.include_router(api.router)
 
